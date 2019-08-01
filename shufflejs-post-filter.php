@@ -12,4 +12,6 @@
  * @package         Shufflejs_Post_Filter
  */
 
-// Your code starts here.
+// Include files
+require_once 'lib/fns/enqueues.php';
+require_once 'lib/fns/shortcodes.php';
