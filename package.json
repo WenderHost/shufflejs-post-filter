@@ -17,7 +17,7 @@
     "shufflejs": "^5.2.2"
   },
   "scripts": {
-    "development:browsersync": "browser-sync start --proxy 'https://netmind.flywheel' --files 'lib/css/*.css' 'lib/js/src/*.js' 'lib/fns/*.php'",
+    "development:browsersync": "browser-sync start --proxy 'https://netmind.local' --files 'lib/css/*.css' 'lib/js/src/*.js' 'lib/fns/*.php'",
     "development:watchify": "watchify lib/js/src/main.js -o lib/js/dist/bundle.js -t [ babelify --presets [ @babel/preset-env] --plugins [ @babel/plugin-transform-async-to-generator @babel/plugin-transform-runtime] ] -v --debug",
     "developmentXXX:sass": "sass lib/scss/postfilter.scss lib/css/postfilter.css",
     "development:sasswatch": "sass --watch lib/scss:lib/css",
