@@ -17,6 +17,8 @@ function post_filter( $atts ){
     'orderby'             => null,
   ], $atts );
 
+  $args['limit'] = -1; // Force all posts returned until we get LOAD MORE working
+
   if( ! is_null( $args['default_thumbnail'] ) && is_numeric( $args['default_thumbnail'] ) )
     $args['default_thumbnail'] = wp_get_attachment_image_url( $args['default_thumbnail'], 'large' );
 
@@ -55,30 +57,42 @@ function post_filter( $atts ){
   $posts = get_posts( $query_args );
   if( $posts ){
     $x = 0;
+
+    // $all_groups holds all terms found in the set of
+    // posts returned by our query
+    $all_groups = [];
+    switch ( $args['post_type'] ) {
+      case 'product':
+        $taxonomies = ['sub_category','certification'];
+        break;
+
+      default:
+        $taxonomies = ['resource_type','knowledge_area'];
+        break;
+    }
+    if( ! is_null( $args['taxonomy']) ){
+      if( ( $key = array_search( $args['taxonomy'], $taxonomies ) ) !== false ){
+        unset( $taxonomies[$key]);
+      }
+    }
+
+    foreach( $taxonomies as $taxonomy ){
+      $all_groups[$taxonomy] = [];
+    }
+
     foreach( $posts as $post ){
-      switch ( $args['post_type'] ) {
-        case 'product':
-          $taxonomies = ['product_cat','delivery_mode'];
-          break;
-
-        default:
-          $taxonomies = ['resource_type','knowledge_area'];
-          break;
-      }
-      if( ! is_null( $args['taxonomy']) ){
-        if( ( $key = array_search( $args['taxonomy'], $taxonomies ) ) !== false ){
-          unset( $taxonomies[$key]);
-        }
-      }
-
-      $css_classes = [ $args['post_type'] ];
+      $groups = [];
       $terms = wp_get_object_terms( $post->ID, $taxonomies );
       if( ! empty( $terms ) && ! is_wp_error( $terms ) ){
         foreach( $terms as $term ){
-          $css_classes[] = $term->slug;
+          $groups[] = $term->slug;
+
+          if( ! in_array( $term->slug, $all_groups[$term->taxonomy] ) ){
+            $all_groups[$term->taxonomy][] = $term->slug;
+          }
         }
       }
-      if( 1 < count( $css_classes ) )
+      if( 1 < count( $groups ) )
         $get_filters = true;
 
       $posts_array[$x] = [
@@ -86,7 +100,8 @@ function post_filter( $atts ){
         'thumbnail'   => get_the_post_thumbnail_url( $post->ID, 'large' ),
         'title'       => get_the_title( $post->ID ),
         'esc_title'   => esc_attr( get_the_title( $post->ID ) ),
-        'css_classes' => '["' . implode('","', $css_classes ) . '"]',
+        'css_classes' => '["' . implode('","', $groups ) . '"]',
+        'groups'      => $groups,
       ];
 
       // Get meta data for posts
@@ -127,6 +142,7 @@ function post_filter( $atts ){
   ]);
   wp_enqueue_style( 'postfilter' );
 
+  $args['all_groups'] = $all_groups;
   $filter_html = ( $get_filters )? post_search_and_filters( $args ) : '' ;
 
   return $filter_html . '<ul id="' . $args['gridId'] . '"></ul><div class="post-filter-footer"><a class="button" id="load-more" href="#">Load More</a></div>';
@@ -138,7 +154,7 @@ function post_search_and_filters( $args = [] ){
 
   switch( $args['post_type'] ){
     case 'product':
-      $taxonomies = ['product_cat','delivery_mode'];
+      $taxonomies = ['sub_category','certification'];
       break;
 
     default:
@@ -162,7 +178,8 @@ function post_search_and_filters( $args = [] ){
 
     $term_list = ['<li><a href="#" data-filter="*">All ' . $taxonomy_obj->label . '</a></li>'];
     foreach( $terms as $term ){
-      $term_list[] = '<li><a class="filter-link" href="#" data-filter="' . $term->slug . '">' . $term->name . '</a></li>'; //  <span>' . $term->count . '</span>
+      if( in_array( $term->slug, $args['all_groups'][$term->taxonomy] ) )
+        $term_list[] = '<li><a class="filter-link" href="#" data-filter="' . $term->slug . '" data-taxonomy="' . $term->taxonomy . '">' . $term->name . '</a></li>'; //  <span>' . $term->count . '</span>
     }
 
     $html.= '<div class="filter"><h4>' . ucwords( str_replace( '-', ' ', $taxonomy_obj->label ) ) . '</h4><ul class="filter-link-group" data-taxonomy="' . $taxonomy . '">' . implode( '', $term_list ) . '</ul></div>';

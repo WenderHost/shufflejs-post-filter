@@ -64,6 +64,8 @@ ul.shuffle {
   font-size: 18px;
   padding-bottom: 5px;
   margin-bottom: 20px; }
+.filter + ul#post-grid {
+  margin-top: 60px; }
 
 .filter-link-group {
   display: flex;
@@ -81,7 +83,6 @@ ul.shuffle {
     text-decoration: none;
     padding: 4px 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
     display: flex;
     align-items: center; }
     .filter-link-group a:hover {
