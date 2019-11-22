@@ -21,11 +21,17 @@ ul.shuffle {
     width: 100%; }
     ul.shuffle .list-content.product {
       background-color: #009ee0;
-      padding: 10px 20px 30px 20px;
-      height: 260px;
+      /*padding: 10px 20px 30px 20px;*/
+      padding: 20px 25px 40px 25px;
+      height: 360px;
       justify-content: space-between; }
+      ul.shuffle .list-content.product h3 {
+        font-size: 21px;
+        line-height: 1.6rem; }
       ul.shuffle .list-content.product a {
         color: #fff; }
+        ul.shuffle .list-content.product a.button {
+          font-size: 14px; }
     ul.shuffle .list-content.post {
       height: 340px; }
       ul.shuffle .list-content.post p.meta {
