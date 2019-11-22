@@ -176,7 +176,7 @@ function post_search_and_filters( $args = [] ){
       'hierarchical' => false,
     ]);
 
-    $term_list = ['<li><a href="#" data-filter="*">All ' . $taxonomy_obj->label . '</a></li>'];
+    $term_list = ['<li><a href="#" data-filter="*">All</a></li>'];
     foreach( $terms as $term ){
       if( in_array( $term->slug, $args['all_groups'][$term->taxonomy] ) )
         $term_list[] = '<li><a class="filter-link" href="#" data-filter="' . $term->slug . '" data-taxonomy="' . $term->taxonomy . '">' . $term->name . '</a></li>'; //  <span>' . $term->count . '</span>
