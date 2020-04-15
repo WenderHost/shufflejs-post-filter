@@ -120,7 +120,9 @@ function post_filter( $atts ){
             $meta_resource_types_array[] = '<a href="' . get_term_link( $term->term_id ) . '">' . $term->name . '</a>';
           }
         }
-        $posts_array[$x]['meta'] = implode(', ', $meta_knowledge_areas_array ) . ' &ndash; ' . implode(', ', $meta_resource_types_array);
+        $posts_array[$x]['meta'] = strip_tags( implode(', ', $meta_knowledge_areas_array ) );
+        $resource_types_html = ucwords( implode(', ', $meta_resource_types_array) );
+        $posts_array[$x]['resource_type'] = strip_tags( $resource_types_html );
       }
       $x++;
     }
