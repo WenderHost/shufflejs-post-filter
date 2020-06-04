@@ -15,6 +15,7 @@ function post_filter( $atts ){
     'filter_class_name'   => 'filter-link-group',
     'order'               => null,
     'orderby'             => null,
+    'exclude'             => null,
   ], $atts );
 
   $args['limit'] = -1; // Force all posts returned until we get LOAD MORE working
@@ -42,6 +43,14 @@ function post_filter( $atts ){
         'field'     => 'slug',
         'terms'     => $args['terms'],
       ]
+    ];
+  }
+  if( ! is_null( $args['exclude'] ) ){
+    $query_args['tax_query'][] = [
+      'taxonomy'  => 'sub_category',
+      'field'     => 'slug',
+      'terms'     => explode(',', $args['exclude'] ),
+      'operator'  => 'NOT IN',
     ];
   }
 
