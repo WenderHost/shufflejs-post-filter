@@ -2,6 +2,26 @@
 
 namespace ShufflejsPostFilter\shortcodes;
 
+/**
+ * Displays a ShuffleJS powered listing of posts.
+ *
+ * @param      array  $atts {
+ *    @type  type     $category           The category. (?)
+ *    @type  type     $tag                The tag. (?)
+ *    @type  string   $post_type          The post_type.
+ *    @type  string   $taxonomy           The taxonomy we're displaying as buttons.
+ *    @type  string   $terms              The terms. (?)
+ *    @type  type     $limit              The category.
+ *    @type  type     $gridId             Will be used as the HTML id attribute. Must be unique on the output page.
+ *    @type  int      $default_thumbnail  Default thumbnail ID.
+ *    @type  string   $filter_class_name  Filter class name.
+ *    @type  string   $order              Either ASC or DESC.
+ *    @type  string   $orderby            The column we're sorting by.
+ *    @type  string   $exclude            List of terms to exclude from the ShuffleJS filter list.
+ * }
+ *
+ * @return     string  HTML for displaying our ShuffleJS filter and list of posts.
+ */
 function post_filter( $atts ){
   $args = shortcode_atts( [
     'category'            => null,
@@ -45,6 +65,7 @@ function post_filter( $atts ){
       ]
     ];
   }
+  /*
   if( ! is_null( $args['exclude'] ) ){
     $query_args['tax_query'][] = [
       'taxonomy'  => 'sub_category',
@@ -53,6 +74,7 @@ function post_filter( $atts ){
       'operator'  => 'NOT IN',
     ];
   }
+  */
 
   /**
    * While getting terms for each post, we'll set
@@ -188,7 +210,11 @@ function post_search_and_filters( $args = [] ){
     ]);
 
     $term_list = ['<li><a href="#" data-filter="*">All</a></li>'];
+    $exclude_array = explode( ',', str_replace(' ', '', $args['exclude'] ) );
     foreach( $terms as $term ){
+      if( in_array( $term->slug, $exclude_array ) )
+        continue;
+
       if( in_array( $term->slug, $args['all_groups'][$term->taxonomy] ) )
         $term_list[] = '<li><a class="filter-link" href="#" data-filter="' . $term->slug . '" data-taxonomy="' . $term->taxonomy . '">' . $term->name . '</a></li>'; //  <span>' . $term->count . '</span>
     }
