@@ -162,7 +162,8 @@ ul.shuffle {
           ul.shuffle li.list-item.product .course-meta .course-meta-row .course-meta-col {
             display: flex;
             align-items: center;
-            font-size: 14px; }
+            font-size: 14px;
+            color: #009ee0; }
             ul.shuffle li.list-item.product .course-meta .course-meta-row .course-meta-col.false {
               color: #999; }
             ul.shuffle li.list-item.product .course-meta .course-meta-row .course-meta-col:first-child {
