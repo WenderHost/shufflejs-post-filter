@@ -126,6 +126,10 @@ function post_filter( $atts ){
       if( 1 < count( $groups ) )
         $get_filters = true;
 
+      // Set "new" for posts <= 3 months old
+      $timestamp = get_the_date( 'U', $post->ID );
+      $new = ( current_time( 'timestamp' ) <= $timestamp + ( MONTH_IN_SECONDS * 3 ) )? true : false ;
+
       $posts_array[$x] = [
         'permalink'   => get_permalink( $post->ID ),
         'thumbnail'   => get_the_post_thumbnail_url( $post->ID, 'large' ),
@@ -133,6 +137,9 @@ function post_filter( $atts ){
         'esc_title'   => esc_attr( get_the_title( $post->ID ) ),
         'css_classes' => '["' . implode('","', $groups ) . '"]',
         'groups'      => $groups,
+        'new'         => $new,
+        'meta'        => get_post_meta( $post->ID ),
+        'excerpt'     => str_replace('Introduction ', '', get_the_excerpt( $post->ID ) ),
       ];
 
       // Get meta data for posts
