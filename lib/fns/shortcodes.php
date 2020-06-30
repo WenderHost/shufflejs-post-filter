@@ -36,7 +36,10 @@ function post_filter( $atts ){
     'order'               => null,
     'orderby'             => null,
     'exclude'             => null,
+    'show_filters'        => true,
   ], $atts );
+  if( $args['show_filters'] === 'false' ) $args['show_filters'] = false;
+  $args['show_filters'] = (bool) $args['show_filters'];
 
   $args['limit'] = -1; // Force all posts returned until we get LOAD MORE working
 
@@ -190,7 +193,7 @@ function post_filter( $atts ){
   wp_enqueue_style( 'postfilter' );
 
   $args['all_groups'] = $all_groups;
-  $filter_html = ( $get_filters )? post_search_and_filters( $args ) : '' ;
+  $filter_html = ( $get_filters && $args['show_filters'] )? post_search_and_filters( $args ) : '' ;
 
   return $filter_html . '<ul id="' . $args['gridId'] . '"></ul><div class="post-filter-footer"><a class="button" id="load-more" href="#">Load More</a></div>';
 }
