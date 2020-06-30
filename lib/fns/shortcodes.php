@@ -65,16 +65,6 @@ function post_filter( $atts ){
       ]
     ];
   }
-  /*
-  if( ! is_null( $args['exclude'] ) ){
-    $query_args['tax_query'][] = [
-      'taxonomy'  => 'sub_category',
-      'field'     => 'slug',
-      'terms'     => explode(',', $args['exclude'] ),
-      'operator'  => 'NOT IN',
-    ];
-  }
-  */
 
   /**
    * While getting terms for each post, we'll set
@@ -130,6 +120,23 @@ function post_filter( $atts ){
       $timestamp = get_the_date( 'U', $post->ID );
       $new = ( current_time( 'timestamp' ) <= $timestamp + ( MONTH_IN_SECONDS * 3 ) )? true : false ;
 
+      $meta = []; // Populate this array with the post's meta
+      $raw_meta = get_post_meta( $post->ID );
+      foreach ( $raw_meta as $key => $value ) {
+        if( '_course' == substr( $key, 0, 7 ) ){
+          $new_key = substr( $key, 1, ( strlen( $key ) - 1 ) );
+          $data = @unserialize( $value[0] );
+          $meta[$new_key] = ( $data !== false )? $data : $value[0];
+        }
+      }
+      $meta['face_to_face'] = false;
+      $meta['virtual'] = false;
+      if( array_key_exists( 'course_delivery_mode', $meta ) ){
+        $delivery_modes = $meta['course_delivery_mode'];
+        $meta['face_to_face'] = ( in_array('Face-to-Face', $delivery_modes ) )? true : false ;
+        $meta['virtual'] = ( in_array('Virtual', $delivery_modes ) )? true : false ;
+      }
+
       $posts_array[$x] = [
         'permalink'   => get_permalink( $post->ID ),
         'thumbnail'   => get_the_post_thumbnail_url( $post->ID, 'large' ),
@@ -138,7 +145,7 @@ function post_filter( $atts ){
         'css_classes' => '["' . implode('","', $groups ) . '"]',
         'groups'      => $groups,
         'new'         => $new,
-        'meta'        => get_post_meta( $post->ID ),
+        'meta'        => $meta,
         'excerpt'     => str_replace('Introduction ', '', get_the_excerpt( $post->ID ) ),
       ];
 
