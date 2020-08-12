@@ -60,6 +60,7 @@ ul.shuffle{
 
         .course-meta-row{
           display: flex;
+          margin: 2px 0;
 
           .course-meta-col{
             display: flex;
@@ -103,6 +104,12 @@ ul.shuffle{
               &.virtual.false{
                 @include virtual( '999' );
               }
+            }
+          }
+          .text{
+            span{
+              display: inline-block;
+              line-height: 1em;
             }
           }
         }

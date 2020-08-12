@@ -1,16 +1,18 @@
 === ShuffleJS Post Filter ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://example.com/
+Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
-Tested up to: 5.4.2
-Stable tag: 1.1.3
+Tested up to: 5.5.0
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Displays a listing of posts sortable by ShuffleJS.
 
 == Changelog ==
+
+= 1.1.4 =
+* Adding "Virtual" to label for "OpenClass" classes.
 
 = 1.1.3 =
 * Removing borders around flip cards.
