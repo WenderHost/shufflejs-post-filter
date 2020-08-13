@@ -177,6 +177,7 @@ function post_filter( $atts ){
     $posts_json = json_encode( $posts_array );
   } else {
     $posts_json = '{ null }';
+    $posts_array = [];
   }
 
   wp_enqueue_script( 'postfilter' );
@@ -192,7 +193,8 @@ function post_filter( $atts ){
   ]);
   wp_enqueue_style( 'postfilter' );
 
-  $args['all_groups'] = $all_groups;
+  if( isset( $all_groups ) )
+    $args['all_groups'] = $all_groups;
   $filter_html = ( $get_filters && $args['show_filters'] )? post_search_and_filters( $args ) : '' ;
 
   return $filter_html . '<ul id="' . $args['gridId'] . '"></ul><div class="post-filter-footer"><a class="button" id="load-more" href="#">Load More</a></div>';
