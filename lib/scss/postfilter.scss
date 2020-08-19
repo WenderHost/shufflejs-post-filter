@@ -222,7 +222,8 @@ ul.shuffle{
     border-bottom: 1px solid #000;
     font-size: 18px;
     padding-bottom: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    color: #009ee0 !important;
   }
 
   & + ul#post-grid{
@@ -239,7 +240,7 @@ ul.shuffle{
     list-style: none;
   }
   &{
-    margin: 0;
+    margin: 0 0 20px 0;
   }
   li{
     margin: .25em;
@@ -252,9 +253,9 @@ ul.shuffle{
     border: 1px solid #ddd;
     display: flex;
     align-items: center;
+    background-color: #fff;
 
     &:hover{
-      background-color: #fff;
       color: $netmindblue;
     }
 

@@ -3,13 +3,16 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.5.0
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Displays a listing of posts sortable by ShuffleJS.
 
 == Changelog ==
+
+= 1.2.1 =
+* Styling adjustments to [postfilter /] filter buttons.
 
 = 1.2.0 =
 * Adding `post__in` attribute to specify the complete set and order of posts displayed by `[postfilter /]`.

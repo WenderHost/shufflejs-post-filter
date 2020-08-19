@@ -265,7 +265,8 @@ ul.shuffle {
   border-bottom: 1px solid #000;
   font-size: 18px;
   padding-bottom: 5px;
-  margin-bottom: 20px; }
+  margin-bottom: 10px;
+  color: #009ee0 !important; }
 .filter + ul#post-grid {
   margin-top: 60px; }
 
@@ -276,7 +277,7 @@ ul.shuffle {
     padding: 0;
     list-style: none; }
   .filter-link-group {
-    margin: 0; }
+    margin: 0 0 20px 0; }
   .filter-link-group li {
     margin: .25em; }
   .filter-link-group a {
@@ -286,9 +287,9 @@ ul.shuffle {
     padding: 4px 10px;
     border: 1px solid #ddd;
     display: flex;
-    align-items: center; }
+    align-items: center;
+    background-color: #fff; }
     .filter-link-group a:hover {
-      background-color: #fff;
       color: #009ee0; }
     .filter-link-group a.selected {
       background-color: #94dfff; }
