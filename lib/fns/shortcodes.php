@@ -25,6 +25,7 @@ namespace ShufflejsPostFilter\shortcodes;
 function post_filter( $atts ){
   $args = shortcode_atts( [
     'category'            => null,
+    'post__in'            => null,
     'tag'                 => null,
     'post_type'           => 'post',
     'taxonomy'            => null,
@@ -49,16 +50,29 @@ function post_filter( $atts ){
   $query_args = [
     'post_type'       => $args['post_type'],
     'posts_per_page'  => -1,
-    'order'           => $args['order'],
-    'orderby'         => $args['orderby'],
   ];
-  if( 'product' == $args['post_type'] && is_null( $args['order'] ) && is_null( $args['orderby'] ) ){
-    $query_args['order'] = 'ASC';
-    $query_args['orderby'] = 'menu_order';
-  } else if ( 'post' == $args['post_type'] && is_null( $args['order'] ) && is_null( $args['orderby'] ) ){
-    $query_args['order'] = 'DESC';
-    $query_args['orderby'] = 'date';
+
+  // Specify set of posts by `post__in`
+  if( ! is_null( $args['post__in'] ) ){
+    if( ! stristr( $args['post__in'], ',' ) ){
+      $post__in = array( $args['post__in'] );
+    } else {
+      $post__in = array_map( 'trim', explode( ',', $args['post__in'] ) );
+    }
+    $query_args['post__in'] = $post__in;
+  } else {
+    if( 'product' == $args['post_type'] && is_null( $args['order'] ) && is_null( $args['orderby'] ) ){
+      $query_args['order'] = 'ASC';
+      $query_args['orderby'] = 'menu_order';
+    } else if ( 'post' == $args['post_type'] && is_null( $args['order'] ) && is_null( $args['orderby'] ) ){
+      $query_args['order'] = 'DESC';
+      $query_args['orderby'] = 'date';
+    } else {
+      $query_args['order'] = $args['order'];
+      $query_args['orderby'] = $args['orderby'];
+    }
   }
+
   if( ! is_null( $args['taxonomy'] ) && ! is_null( $args['terms'] ) ){
     $query_args['tax_query'] = [
       [
