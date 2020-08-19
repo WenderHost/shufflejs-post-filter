@@ -153,7 +153,7 @@ function post_filter( $atts ){
         $meta['face_to_face'] = ( in_array('Face-to-Face', $delivery_modes ) )? true : false ;
         $meta['virtual'] = ( in_array('Virtual', $delivery_modes ) )? true : false ;
       }
-
+      $excerpt = strip_tags( get_the_content( null, false, $post->ID ) ); // get_the_excerpt( $post->ID )
       $posts_array[$x] = [
         'permalink'   => get_permalink( $post->ID ),
         'thumbnail'   => get_the_post_thumbnail_url( $post->ID, 'large' ),
@@ -163,7 +163,7 @@ function post_filter( $atts ){
         'groups'      => $groups,
         'new'         => $new,
         'meta'        => $meta,
-        'excerpt'     => str_replace('Introduction ', '', get_the_excerpt( $post->ID ) ),
+        'excerpt'     => str_replace('Introduction', '', $excerpt ),
       ];
 
       // Get meta data for posts

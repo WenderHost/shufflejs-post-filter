@@ -122,11 +122,22 @@ ul.shuffle {
     line-height: 1.25em;
     margin: 0;
     font-family: 'futura-pt-bold', sans-serif;
-    color: #4d4d4d; }
+    color: #4d4d4d;
+    height: 2.5em;
+    /* Add ellipsis to second line */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; }
   ul.shuffle p {
     line-height: 1.5em;
-    max-height: 240px;
-    overflow: hidden; }
+    /* Add ellipsis to second line */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical; }
   ul.shuffle, ul.shuffle li {
     padding: 0;
     margin: 0;
