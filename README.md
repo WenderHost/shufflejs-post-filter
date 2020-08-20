@@ -3,13 +3,16 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.5.0  
-**Stable tag:** 1.2.2  
+**Stable tag:** 1.2.3  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
 Displays a listing of posts sortable by ShuffleJS.
 
 ## Changelog ##
+
+### 1.2.3 ###
+* Adding `include_all` attribute to `[postfilter/]` for including all other posts when using `post__in`.
 
 ### 1.2.2 ###
 * Flip Card back styling for 2nd line ellipsis on heading, and 8th line ellipsis on the excerpt.

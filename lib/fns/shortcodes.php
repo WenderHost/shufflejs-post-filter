@@ -6,13 +6,15 @@ namespace ShufflejsPostFilter\shortcodes;
  * Displays a ShuffleJS powered listing of posts.
  *
  * @param      array  $atts {
- *    @type  type     $category           The category. (?)
- *    @type  type     $tag                The tag. (?)
+ *    @type  string   $category           The category. (?)
+ *    @type  string   $post__in           Comma separated list of Post IDs.
+ *    @type  bool     $include_all        Used with `post__in`, includes all other posts after initial set listed in `post__in`.
+ *    @type  string   $tag                The tag. (?)
  *    @type  string   $post_type          The post_type.
  *    @type  string   $taxonomy           The taxonomy we're displaying as buttons.
  *    @type  string   $terms              The terms. (?)
- *    @type  type     $limit              The category.
- *    @type  type     $gridId             Will be used as the HTML id attribute. Must be unique on the output page.
+ *    @type  int      $limit              The category.
+ *    @type  int      $gridId             Will be used as the HTML id attribute. Must be unique on the output page.
  *    @type  int      $default_thumbnail  Default thumbnail ID.
  *    @type  string   $filter_class_name  Filter class name.
  *    @type  string   $order              Either ASC or DESC.
@@ -26,6 +28,7 @@ function post_filter( $atts ){
   $args = shortcode_atts( [
     'category'            => null,
     'post__in'            => null,
+    'include_all'         => 0,
     'tag'                 => null,
     'post_type'           => 'post',
     'taxonomy'            => null,
@@ -39,6 +42,10 @@ function post_filter( $atts ){
     'exclude'             => null,
     'show_filters'        => true,
   ], $atts );
+
+  if( 'false' === $args['include_all'] ) $args['include_all'] = false;
+  $args['include_all'] = (bool) $args['include_all'];
+
   if( $args['show_filters'] === 'false' ) $args['show_filters'] = false;
   $args['show_filters'] = (bool) $args['show_filters'];
 
@@ -93,6 +100,13 @@ function post_filter( $atts ){
   $get_filters = false;
 
   $posts = get_posts( $query_args );
+  if( $args['include_all'] && ! is_null( $args['post__in'] ) ){
+    $query_args['post__not_in'] = $query_args['post__in'];
+    unset( $query_args['post__in'] );
+    $additional_posts = get_posts( $query_args );
+    if( $additional_posts )
+      $posts = array_merge( $posts, $additional_posts );
+  }
   if( $posts ){
     $x = 0;
 
