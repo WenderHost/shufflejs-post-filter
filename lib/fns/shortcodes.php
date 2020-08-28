@@ -67,6 +67,7 @@ function post_filter( $atts ){
       $post__in = array_map( 'trim', explode( ',', $args['post__in'] ) );
     }
     $query_args['post__in'] = $post__in;
+    $query_args['orderby'] = 'post__in';
   } else {
     if( 'product' == $args['post_type'] && is_null( $args['order'] ) && is_null( $args['orderby'] ) ){
       $query_args['order'] = 'ASC';
@@ -100,13 +101,18 @@ function post_filter( $atts ){
   $get_filters = false;
 
   $posts = get_posts( $query_args );
+
+  // Include all other posts?
   if( $args['include_all'] && ! is_null( $args['post__in'] ) ){
     $query_args['post__not_in'] = $query_args['post__in'];
+    $query_args['order'] = 'ASC';
+    $query_args['orderby'] = 'menu_order';
     unset( $query_args['post__in'] );
     $additional_posts = get_posts( $query_args );
     if( $additional_posts )
       $posts = array_merge( $posts, $additional_posts );
   }
+
   if( $posts ){
     $x = 0;
 
