@@ -21,6 +21,13 @@ ul.shuffle{
 
   }
 
+  .flip-card-front h3{
+    height: 4.5em;
+    overflow: visible;
+    text-overflow: clip;
+    -webkit-line-clamp: 4;
+  }
+
   p{
     line-height: 1.5em;
 

@@ -130,6 +130,11 @@ ul.shuffle {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical; }
+  ul.shuffle .flip-card-front h3 {
+    height: 4.5em;
+    overflow: visible;
+    text-overflow: clip;
+    -webkit-line-clamp: 4; }
   ul.shuffle p {
     line-height: 1.5em;
     /* Add ellipsis to second line */
