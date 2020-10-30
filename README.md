@@ -3,13 +3,16 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.5.1  
-**Stable tag:** 1.2.6  
+**Stable tag:** 1.2.7  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
 Displays a listing of posts sortable by ShuffleJS.
 
 ## Changelog ##
+
+### 1.2.7 ###
+* Adjusting filter buttons styling (i.e. more "pill shaped", Netmind Blue for selected buttons).
 
 ### 1.2.6 ###
 * BUGFIX: Correctly assigning file version to `postfilter.css` by using `filemtime()`.

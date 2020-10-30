@@ -300,15 +300,18 @@ ul.shuffle {
     color: #4b4b4d;
     font-family: 'futura-pt', sans-serif;
     text-decoration: none;
-    padding: 4px 10px;
-    border: 1px solid #ddd;
+    padding: 4px 16px;
+    border: 2px solid #009ee0;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     background-color: #fff; }
     .filter-link-group a:hover {
-      color: #009ee0; }
+      color: #fff;
+      background-color: #2ec1ff; }
     .filter-link-group a.selected {
-      background-color: #94dfff; }
+      background-color: #009ee0;
+      color: #fff; }
     .filter-link-group a span {
       font-size: 12px;
       background-color: #dfdfdf;
@@ -328,3 +331,5 @@ ul.shuffle {
     text-transform: uppercase;
     text-decoration: none;
     padding: 8px 20px; }
+
+/*# sourceMappingURL=postfilter.css.map */
