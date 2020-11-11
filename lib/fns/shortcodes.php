@@ -194,8 +194,8 @@ function post_filter( $atts ){
           foreach( $knowledge_areas as $term ){
             $meta_knowledge_areas_array[] = '<a href="' . get_term_link( $term->term_id ) . '">' . $term->name . '</a>';
           }
+          $posts_array[$x]['meta'] = strip_tags( implode(', ', $meta_knowledge_areas_array ) );
         }
-        $posts_array[$x]['meta'] = strip_tags( implode(', ', $meta_knowledge_areas_array ) );
 
         $resource_types = wp_get_object_terms( $post->ID, ['resource_type'] );
         if( $resource_types ){
@@ -203,9 +203,9 @@ function post_filter( $atts ){
           foreach( $resource_types as $term ){
             $meta_resource_types_array[] = '<a href="' . get_term_link( $term->term_id ) . '">' . $term->name . '</a>';
           }
+          $resource_types_html = ucwords( implode(', ', $meta_resource_types_array) );
+          $posts_array[$x]['resource_type'] = strip_tags( $resource_types_html );
         }
-        $resource_types_html = ucwords( implode(', ', $meta_resource_types_array) );
-        $posts_array[$x]['resource_type'] = strip_tags( $resource_types_html );
 
         $best_practices = wp_get_object_terms( $post->ID, ['best_practice'] );
         if( $best_practices ){
@@ -213,9 +213,10 @@ function post_filter( $atts ){
           foreach( $best_practices as $term ){
             $meta_best_practices_array[] = '<a href="' . get_term_link( $term->term_id ) . '">' . $term->name . '</a>';
           }
+          $best_practices_html = ucwords( implode( ', ', $meta_best_practices_array ) );
+          $posts_array[$x]['best_practice'] = strip_tags( $best_practices_html );
         }
-        $best_practices_html = ucwords( implode(', ', $meta_best_practices_array) );
-        $posts_array[$x]['best_practice'] = strip_tags( $best_practices_html );
+
       }
       $x++;
     }
