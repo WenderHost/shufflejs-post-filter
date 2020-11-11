@@ -282,7 +282,7 @@ ul.shuffle {
   font-size: 18px;
   padding-bottom: 5px;
   margin-bottom: 10px;
-  color: #009ee0 !important; }
+  color: #4b4b4b !important; }
 .filter + ul#post-grid {
   margin-top: 60px; }
 
@@ -331,5 +331,3 @@ ul.shuffle {
     text-transform: uppercase;
     text-decoration: none;
     padding: 8px 20px; }
-
-/*# sourceMappingURL=postfilter.css.map */
