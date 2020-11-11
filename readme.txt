@@ -3,13 +3,16 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.5.1
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Displays a listing of posts sortable by ShuffleJS.
 
 == Changelog ==
+
+= 1.3.1 =
+* Updating Knowledge Center posts to allow for three lines of text for titles.
 
 = 1.3.0 =
 * Setting initial state of filter buttons with "All" selected.

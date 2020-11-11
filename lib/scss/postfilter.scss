@@ -10,13 +10,13 @@ ul.shuffle{
     margin: 0;
     font-family: 'futura-pt-bold', sans-serif;
     color: #4d4d4d;
-    height: 2.5em;
+    height: 3.75em;
 
     /* Add ellipsis to second line */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 
   }
