@@ -125,7 +125,7 @@ function post_filter( $atts ){
         break;
 
       default:
-        $taxonomies = ['resource_type','knowledge_area'];
+        $taxonomies = ['resource_type','knowledge_area','best_practice'];
         break;
     }
     if( ! is_null( $args['taxonomy']) ){
@@ -195,6 +195,8 @@ function post_filter( $atts ){
             $meta_knowledge_areas_array[] = '<a href="' . get_term_link( $term->term_id ) . '">' . $term->name . '</a>';
           }
         }
+        $posts_array[$x]['meta'] = strip_tags( implode(', ', $meta_knowledge_areas_array ) );
+
         $resource_types = wp_get_object_terms( $post->ID, ['resource_type'] );
         if( $resource_types ){
           $meta_resource_types_array = [];
@@ -202,9 +204,18 @@ function post_filter( $atts ){
             $meta_resource_types_array[] = '<a href="' . get_term_link( $term->term_id ) . '">' . $term->name . '</a>';
           }
         }
-        $posts_array[$x]['meta'] = strip_tags( implode(', ', $meta_knowledge_areas_array ) );
         $resource_types_html = ucwords( implode(', ', $meta_resource_types_array) );
         $posts_array[$x]['resource_type'] = strip_tags( $resource_types_html );
+
+        $best_practices = wp_get_object_terms( $post->ID, ['best_practice'] );
+        if( $best_practices ){
+          $meta_best_practices_array = [];
+          foreach( $best_practices as $term ){
+            $meta_best_practices_array[] = '<a href="' . get_term_link( $term->term_id ) . '">' . $term->name . '</a>';
+          }
+        }
+        $best_practices_html = ucwords( implode(', ', $meta_best_practices_array) );
+        $posts_array[$x]['best_practice'] = strip_tags( $best_practices_html );
       }
       $x++;
     }
@@ -244,7 +255,7 @@ function post_search_and_filters( $args = [] ){
       break;
 
     default:
-      $taxonomies = ['resource_type','knowledge_area'];
+      $taxonomies = ['resource_type','knowledge_area','best_practice'];
       break;
   }
   if( ! is_null( $args['taxonomy']) ){
