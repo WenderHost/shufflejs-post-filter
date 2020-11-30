@@ -248,7 +248,7 @@ function post_filter( $atts ){
 add_shortcode( 'postfilter', __NAMESPACE__ . '\\post_filter' );
 
 function post_search_and_filters( $args = [] ){
-  $html = '<div id="shuffle-filters" style="margin-bottom: 59px; height: 1px; display: none;"></div>';
+  $html = '<div id="shuffleFilterTop" style="height: 1px;"></div>';
 
   switch( $args['post_type'] ){
     case 'product':
