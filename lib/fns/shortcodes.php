@@ -248,7 +248,7 @@ function post_filter( $atts ){
 add_shortcode( 'postfilter', __NAMESPACE__ . '\\post_filter' );
 
 function post_search_and_filters( $args = [] ){
-  $html = '';
+  $html = '<div id="shuffle-filters" style="margin-bottom: 59px; height: 1px; display: none;"></div>';
 
   switch( $args['post_type'] ){
     case 'product':
@@ -284,7 +284,7 @@ function post_search_and_filters( $args = [] ){
         $term_list[] = '<li><a class="filter-link" href="#" data-filter="' . $term->slug . '" data-taxonomy="' . $term->taxonomy . '">' . $term->name . '</a></li>'; //  <span>' . $term->count . '</span>
     }
 
-    $html.= '<div class="filter"><h4>' . ucwords( str_replace( '-', ' ', $taxonomy_obj->label ) ) . '</h4><ul class="filter-link-group" data-taxonomy="' . $taxonomy . '">' . implode( '', $term_list ) . '</ul></div>';
+    $html.= '<div class="filter"><h4>' . ucwords( str_replace( '-', ' ', $taxonomy_obj->label ) ) . '</h4><ul class="filter-link-group ' . $taxonomy . '" data-taxonomy="' . $taxonomy . '">' . implode( '', $term_list ) . '</ul></div>';
   }
   return $html;
 
