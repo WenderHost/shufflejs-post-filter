@@ -20,6 +20,8 @@ namespace ShufflejsPostFilter\shortcodes;
  *    @type  string   $order              Either ASC or DESC.
  *    @type  string   $orderby            The column we're sorting by.
  *    @type  string   $exclude            List of terms to exclude from the ShuffleJS filter list.
+ *    @type  bool     $show_filters       Show the filters? (default: true)
+ *    @type  string   $taxonomies_display Comma separated list of taxonomy slugs we want to display filters for.
  * }
  *
  * @return     string  HTML for displaying our ShuffleJS filter and list of posts.
@@ -41,6 +43,7 @@ function post_filter( $atts ){
     'orderby'             => null,
     'exclude'             => null,
     'show_filters'        => true,
+    'taxonomies_display'  => null,
   ], $atts );
 
   if( 'false' === $args['include_all'] ) $args['include_all'] = false;
@@ -119,14 +122,18 @@ function post_filter( $atts ){
     // $all_groups holds all terms found in the set of
     // posts returned by our query
     $all_groups = [];
-    switch ( $args['post_type'] ) {
-      case 'product':
-        $taxonomies = ['sub_category','certification'];
-        break;
+    if( isset( $args['taxonomies_display'] ) && ! is_null( $args['taxonomies_display'] ) ){
+      $taxonomies = explode( ',', $args['taxonomies_display'] );
+    } else {
+      switch ( $args['post_type'] ) {
+        case 'product':
+          $taxonomies = ['sub_category','certification'];
+          break;
 
-      default:
-        $taxonomies = ['resource_type','knowledge_area','best_practice'];
-        break;
+        default:
+          $taxonomies = ['resource_type','knowledge_area','best_practice'];
+          break;
+      }
     }
     if( ! is_null( $args['taxonomy']) ){
       if( ( $key = array_search( $args['taxonomy'], $taxonomies ) ) !== false ){
@@ -250,21 +257,25 @@ add_shortcode( 'postfilter', __NAMESPACE__ . '\\post_filter' );
 function post_search_and_filters( $args = [] ){
   $html = '<div id="shuffleFilterTop" style="height: 1px;"></div>';
 
-  switch( $args['post_type'] ){
-    case 'product':
-      $taxonomies = ['sub_category','certification'];
-      break;
+  if( isset( $args['taxonomies_display'] ) && ! is_null( $args['taxonomies_display'] ) ){
+    $taxonomies = explode( ',', $args['taxonomies_display'] );
+  } else {
+    switch( $args['post_type'] ){
+      case 'product':
+        $taxonomies = ['sub_category','certification'];
+        break;
 
-    default:
-      $taxonomies = ['resource_type','knowledge_area','best_practice'];
-      break;
+      default:
+        $taxonomies = ['resource_type','knowledge_area','best_practice'];
+        break;
+    }
   }
+
   if( ! is_null( $args['taxonomy']) ){
     if( ( $key = array_search( $args['taxonomy'], $taxonomies ) ) !== false ){
       unset( $taxonomies[$key]);
     }
   }
-
 
   foreach( $taxonomies as $taxonomy ){
     $taxonomy_obj = get_taxonomy( $taxonomy );

@@ -3,13 +3,44 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.5.1
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Displays a listing of posts sortable by ShuffleJS.
+Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilter]` with the following options:
+
+```
+/**
+ * Displays a ShuffleJS powered listing of posts.
+ *
+ * @param      array  $atts {
+ *    @type  string   $category           The category. (?)
+ *    @type  string   $post__in           Comma separated list of Post IDs.
+ *    @type  bool     $include_all        Used with `post__in`, includes all other posts after initial set listed in `post__in`.
+ *    @type  string   $tag                The tag. (?)
+ *    @type  string   $post_type          The post_type.
+ *    @type  string   $taxonomy           The taxonomy we're displaying as buttons.
+ *    @type  string   $terms              The terms. (?)
+ *    @type  int      $limit              The category.
+ *    @type  int      $gridId             Will be used as the HTML id attribute. Must be unique on the output page.
+ *    @type  int      $default_thumbnail  Default thumbnail ID.
+ *    @type  string   $filter_class_name  Filter class name.
+ *    @type  string   $order              Either ASC or DESC.
+ *    @type  string   $orderby            The column we're sorting by.
+ *    @type  string   $exclude            List of terms to exclude from the ShuffleJS filter list.
+ *    @type  boolean  $show_filters       Show the filters?
+ *    @type  string   $taxonomies_display Comma separated list of taxonomy slugs we want to display filters for.
+ * }
+ *
+ * @return     string  HTML for displaying our ShuffleJS filter and list of posts.
+ */
+```
 
 == Changelog ==
+
+= 1.4.3 =
+* Adding `taxonomies_display` option for `[postfilter]` shortcode.
+* Adding `[postfilter]` documentation to the README.
 
 = 1.4.2 =
 * Adding "Deep Link" smooth scroll.
