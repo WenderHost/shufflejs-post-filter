@@ -6,54 +6,78 @@ namespace ShufflejsPostFilter\shortcodes;
  * Displays a ShuffleJS powered listing of posts.
  *
  * @param      array  $atts {
- *    @type  string   $category           The category. (?)
- *    @type  int      $default_thumbnail  Default thumbnail ID.
- *    @type  string   $exclude            List of terms to exclude from the ShuffleJS filter list.
- *    @type  string   $filter_class_name  Filter class name.
- *    @type  int      $gridId             Will be used as the HTML id attribute. Must be unique on the output page.
- *    @type  int      $limit              The category.
- *    @type  string   $order              Either ASC or DESC.
- *    @type  string   $orderby            The column we're sorting by.
- *    @type  string   $post__in           Comma separated list of Post IDs.
- *    @type  string   $post_type          The post_type.
- *    @type  bool     $include_all        Used with `post__in`, includes all other posts after initial set listed in `post__in`.
- *    @type  bool     $show_filters       Show the filters? (default: true)
- *    @type  string   $tag                The tag. (?)
- *    @type  string   $taxonomies_display Comma separated list of taxonomy slugs we want to display filters for.
- *    @type  string   $taxonomy           The taxonomy we're displaying as buttons.
- *    @type  string   $terms              The terms. (?)
+ *    @type  string   $category            The category. (?)
+ *    @type  int      $default_thumbnail   Default thumbnail ID.
+ *    @type  string   $exclude             List of terms to exclude from the ShuffleJS filter list.
+ *    @type  string   $filter_class_name   Filter class name.
+ *    @type  int      $gridId              Will be used as the HTML id attribute. Must be unique on the output page.
+ *    @type  int      $limit               The category.
+ *    @type  string   $order               Either ASC or DESC.
+ *    @type  string   $orderby             The column we're sorting by.
+ *    @type  string   $post__in            Comma separated list of Post IDs.
+ *    @type  string   $post_type           The post_type.
+ *    @type  string   $primary_role        The slug of the `role` you want to highlight when displaying "Roles/Professional Levels"
+ *                                         as a filter. For example, if you want to use "Agile Coaching" as the filter under
+ *                                         "Professional Levels", you set the $primary_role to `agile-coaching`, and your
+ *                                         "Professional Levels" filters will show as "Advanced", "Awareness", "Core", and
+ *                                         "Supporting" for "Agile Coaching".
+ *    @type  bool     $include_all         Used with `post__in`, includes all other posts after initial set listed in `post__in`.
+ *    @type  bool     $show_all_filters    Set this to TRUE when using the `primary_role` attribute to also show the `primary_role` as a filter.
+ *    @type  bool     $show_filters        Show the filters? (default: true)
+ *    @type  string   $tag                 The tag. (?)
+ *    @type  string   $taxonomies_display  Comma separated list of taxonomy slugs we want to display filters for.
+ *    @type  string   $taxonomy            The taxonomy we're displaying as buttons.
+ *    @type  string   $terms               The terms. (?)
  * }
  *
  * @return     string  HTML for displaying our ShuffleJS filter and list of posts.
  */
 function post_filter( $atts ){
   $args = shortcode_atts([
-    'category'            => null,
-    'default_thumbnail'   => null,
-    'exclude'             => null,
-    'filter_class_name'   => 'filter-link-group',
-    'gridId'              => 'post-grid',
-    'limit'               => -1,
-    'order'               => null,
-    'orderby'             => null,
-    'post__in'            => null,
-    'post_type'           => 'post',
-    'include_all'         => false,
-    'show_filters'        => true,
-    'tag'                 => null,
-    'taxonomies_display'  => null,
-    'taxonomy'            => null,
-    'terms'               => null,
+    'category'                  => null,
+    'default_thumbnail'         => null,
+    'exclude'                   => null,
+    'filter_class_name'         => 'filter-link-group',
+    'gridId'                    => 'post-grid',
+    'limit'                     => -1,
+    'order'                     => null,
+    'orderby'                   => null,
+    'post__in'                  => null,
+    'post_type'                 => 'post',
+    'primary_role'              => null,
+    'include_all'               => false,
+    'show_all_filters'          => false,
+    'show_filters'              => true,
+    'tag'                       => null,
+    'taxonomies_display'        => null,
+    'taxonomy'                  => null,
+    'terms'                     => null,
   ], $atts );
 
+  $html = []; // Initialize array for storing our HTML
+
+  // Setup boolean arguments
   if( 'false' === $args['include_all'] ) $args['include_all'] = false;
   $args['include_all'] = (bool) $args['include_all'];
-
+  if( $args['show_all_filters'] === 'false' ) $args['show_all_filters'] = false;
+  $args['show_all_filters'] = (bool) $args['show_all_filters'];
   if( $args['show_filters'] === 'false' ) $args['show_filters'] = false;
   $args['show_filters'] = (bool) $args['show_filters'];
 
+  // Grab the $term_id of the `primary_role`
+  $primary_role_id = false;
+  if( ! is_null( $args['primary_role'] ) ){
+    $primary_role = get_term_by( 'slug', esc_attr( $args['primary_role'] ), 'role' );
+    if( ! $primary_role ){
+      $html[] = '<p><strong>Invalid primary_role</strong><br/>ERROR: You specifed a <code>primary_role</code> of "' . $args['primary_role'] . '", but it was not found.</p>';
+    } else {
+      $primary_role_id = $primary_role->term_id;
+    }
+  }
+
   $args['limit'] = -1; // Force all posts returned until we get LOAD MORE working
 
+  // Set our default thumbnail
   if( ! is_null( $args['default_thumbnail'] ) && is_numeric( $args['default_thumbnail'] ) )
     $args['default_thumbnail'] = wp_get_attachment_image_url( $args['default_thumbnail'], 'large' );
 
@@ -84,6 +108,7 @@ function post_filter( $atts ){
     }
   }
 
+  // Setup our `tax_query` when we have `taxonomy` and `terms` set
   if( ! is_null( $args['taxonomy'] ) && ! is_null( $args['terms'] ) ){
     $query_args['tax_query'] = [
       [
@@ -98,7 +123,7 @@ function post_filter( $atts ){
    * While getting terms for each post, we'll set
    * $get_filters == true if a post has terms. Otherwise,
    * we'll leave this set to `false` since we don't need
-   * any filters since no terms have been asigned to our
+   * any filters since no terms have been assigned to our
    * posts.
    */
   $get_filters = false;
@@ -118,12 +143,10 @@ function post_filter( $atts ){
 
   if( $posts ){
     $x = 0;
-
-    // $all_groups holds all terms found in the set of
-    // posts returned by our query
+    // $all_groups holds all terms found in the set of posts returned by our query
     $all_groups = [];
     if( isset( $args['taxonomies_display'] ) && ! is_null( $args['taxonomies_display'] ) ){
-      $taxonomies = explode( ',', $args['taxonomies_display'] );
+      $taxonomies = ( stristr( $args['taxonomies_display'], ',' ) )? explode( ',', $args['taxonomies_display'] ) : [ $args['taxonomies_display'] ] ;
     } else {
       switch ( $args['post_type'] ) {
         case 'product':
@@ -135,18 +158,51 @@ function post_filter( $atts ){
           break;
       }
     }
+    /*
     if( ! is_null( $args['taxonomy']) ){
       if( ( $key = array_search( $args['taxonomy'], $taxonomies ) ) !== false ){
         unset( $taxonomies[$key]);
       }
     }
-
+    /**/
     foreach( $taxonomies as $taxonomy ){
       $all_groups[$taxonomy] = [];
     }
 
     foreach( $posts as $post ){
       $groups = [];
+
+      // <NEW>
+      foreach ( $taxonomies as $taxonomy ) {
+        if( PF_DEV_MODE ){
+          $terms = wp_get_post_terms( $post->ID, $taxonomy ); // wp_get_post_terms() is uncached
+        } else {
+          $terms = get_the_terms( $post->ID, $taxonomy ); // get_the_terms() is cached
+        }
+
+        if( ! empty( $terms ) && ! is_wp_error( $terms ) ){
+
+          foreach ( $terms as $term ) {
+            // "Primary Role/Professional Level" Filtering
+            if( 'role' == $taxonomy && $primary_role_id ){
+              // 1. If the current term is our Primary Role, skip it.
+              if( $term->term_id == $primary_role_id )
+                continue;
+              // 2. If the current term is not a child of the Primary Role, skip it.
+              if( $term->parent != $primary_role_id )
+                continue;
+            }
+
+            $groups[] = $term->slug;
+            if( ! in_array( $term->slug, $all_groups[$term->taxonomy] ) )
+              $all_groups[$term->taxonomy][] = $term->slug;
+          }
+        }
+      }
+      // </NEW>
+
+      // <OLD>
+      /*
       $terms = wp_get_object_terms( $post->ID, $taxonomies );
       if( ! empty( $terms ) && ! is_wp_error( $terms ) ){
         foreach( $terms as $term ){
@@ -157,7 +213,9 @@ function post_filter( $atts ){
           }
         }
       }
-      if( 1 < count( $groups ) )
+      /**/
+      // </OLD>
+      if( 0 < count( $groups ) )
         $get_filters = true;
 
       // Set "new" for posts <= 3 months old
@@ -249,13 +307,27 @@ function post_filter( $atts ){
   if( isset( $all_groups ) )
     $args['all_groups'] = $all_groups;
   $filter_html = ( $get_filters && $args['show_filters'] )? post_search_and_filters( $args ) : '' ;
+  if( ( $get_filters && $args['show_filters'] ) )
+    $html[] = post_search_and_filters( $args );
 
-  return $filter_html . '<ul id="' . $args['gridId'] . '"></ul><div class="post-filter-footer"><a class="button" id="load-more" href="#">Load More</a></div>';
+  $html[] = '<ul id="' . $args['gridId'] . '"></ul><div class="post-filter-footer"><a class="button" id="load-more" href="#">Load More</a></div>';
+
+  return implode("\n", $html );
 }
 add_shortcode( 'postfilter', __NAMESPACE__ . '\\post_filter' );
 
+/**
+ * Builds the HTML for our filter button UI.
+ *
+ * @param      array   $args   The arguments
+ *
+ * @return     string  HTML for the filter buttons.
+ */
 function post_search_and_filters( $args = [] ){
-  $html = '<div id="shuffleFilterTop" style="height: 1px;"></div>';
+  //uber_log('🔔 post_search_and_filters() $args = ' . print_r( $args, true ) );
+  $html = [];
+  //$html[] = '<pre>$args = ' . print_r( $args, true ) . '</pre>';
+  $html[] = '<div id="shuffleFilterTop" style="height: 1px;"></div>';
 
   if( isset( $args['taxonomies_display'] ) && ! is_null( $args['taxonomies_display'] ) ){
     $taxonomies = explode( ',', $args['taxonomies_display'] );
@@ -271,7 +343,7 @@ function post_search_and_filters( $args = [] ){
     }
   }
 
-  if( ! is_null( $args['taxonomy']) ){
+  if( ! is_null( $args['taxonomy']) && ( false == $args['show_all_filters'] ) ){
     if( ( $key = array_search( $args['taxonomy'], $taxonomies ) ) !== false ){
       unset( $taxonomies[$key]);
     }
@@ -291,21 +363,25 @@ function post_search_and_filters( $args = [] ){
       if( in_array( $term->slug, $exclude_array ) )
         continue;
 
-      if( in_array( $term->slug, $args['all_groups'][$term->taxonomy] ) )
+      if(
+        array_key_exists( $term->taxonomy, $args['all_groups'] )
+        && is_array( $args['all_groups'][$term->taxonomy] )
+        && in_array( $term->slug, $args['all_groups'][$term->taxonomy] )
+      )
         $term_list[] = '<li><a class="filter-link" href="#" data-filter="' . $term->slug . '" data-taxonomy="' . $term->taxonomy . '">' . $term->name . '</a></li>'; //  <span>' . $term->count . '</span>
     }
 
-    $html.= '<div class="filter"><h4>' . ucwords( str_replace( '-', ' ', $taxonomy_obj->label ) ) . '</h4><ul class="filter-link-group ' . $taxonomy . '" data-taxonomy="' . $taxonomy . '">' . implode( '', $term_list ) . '</ul></div>';
+    switch( strtolower( $taxonomy_obj->label ) ){
+      case 'roles':
+        $heading = __( 'Professional Level', 'shufflejs_post_filter' );
+        break;
+
+      default:
+        $heading = ucwords( str_replace( '-', ' ', $taxonomy_obj->label ) );
+        break;
+    }
+
+    $html[] = '<div class="filter"><h4>' . $heading . '</h4><ul class="filter-link-group ' . $taxonomy . '" data-taxonomy="' . $taxonomy . '">' . implode( '', $term_list ) . '</ul></div>';
   }
-  return $html;
-
-  /*
-  // Add search fields
-  $search_html = '<div class="filter-search-group"><label class="filter-label">Search</label><br><input class="js-shuffle-search" type="search" id="filters-search-input" /></div>';
-
-  // Add container for alphabetical search
-  $alphabetical_search_html = '<div id="js-alphabetical-search"></div>';
-
-  return $search_html . '<div class="filter-groups">' . $html . '</div>' . $alphabetical_search_html;
-  */
+  return implode( '', $html );
 }
