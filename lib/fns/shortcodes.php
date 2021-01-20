@@ -23,7 +23,7 @@ namespace ShufflejsPostFilter\shortcodes;
  *                                         "Supporting" for "Agile Coaching".
  *    @type  bool     $include_all         Used with `post__in`, includes all other posts after initial set listed in `post__in`.
  *    @type  bool     $show_all_filters    Set this to TRUE when using the `primary_role` attribute to also show the `primary_role` as a filter.
- *    @type  bool     $show_filters        Show the filters? (default: true)
+ *    @type  bool     $show_filters        Show the filters?
  *    @type  string   $tag                 The tag. (?)
  *    @type  string   $taxonomies_display  Comma separated list of taxonomy slugs we want to display filters for.
  *    @type  string   $taxonomy            The taxonomy we're displaying as buttons.

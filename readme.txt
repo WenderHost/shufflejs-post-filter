@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.5.1
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
  *                                         "Supporting" for "Agile Coaching".
  *    @type  bool     $include_all         Used with `post__in`, includes all other posts after initial set listed in `post__in`.
  *    @type  bool     $show_all_filters    Set this to TRUE when using the `primary_role` attribute to also show the `primary_role` as a filter.
- *    @type  bool     $show_filters        Show the filters? (default: true)
+ *    @type  bool     $show_filters        Show the filters?
  *    @type  string   $tag                 The tag. (?)
  *    @type  string   $taxonomies_display  Comma separated list of taxonomy slugs we want to display filters for.
  *    @type  string   $taxonomy            The taxonomy we're displaying as buttons.
@@ -43,6 +43,10 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
 ```
 
 == Changelog ==
+
+= 1.5.1 =
+* Updating NPM modules
+* Fixing documentation formating.
 
 = 1.5.0 =
 * Adding `primary_role` attribute for filtering out roles when displaying the "Professional Level" filters.
