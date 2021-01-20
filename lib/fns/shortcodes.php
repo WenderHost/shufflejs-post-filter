@@ -7,21 +7,21 @@ namespace ShufflejsPostFilter\shortcodes;
  *
  * @param      array  $atts {
  *    @type  string   $category           The category. (?)
- *    @type  string   $post__in           Comma separated list of Post IDs.
- *    @type  bool     $include_all        Used with `post__in`, includes all other posts after initial set listed in `post__in`.
- *    @type  string   $tag                The tag. (?)
- *    @type  string   $post_type          The post_type.
- *    @type  string   $taxonomy           The taxonomy we're displaying as buttons.
- *    @type  string   $terms              The terms. (?)
- *    @type  int      $limit              The category.
- *    @type  int      $gridId             Will be used as the HTML id attribute. Must be unique on the output page.
  *    @type  int      $default_thumbnail  Default thumbnail ID.
+ *    @type  string   $exclude            List of terms to exclude from the ShuffleJS filter list.
  *    @type  string   $filter_class_name  Filter class name.
+ *    @type  int      $gridId             Will be used as the HTML id attribute. Must be unique on the output page.
+ *    @type  int      $limit              The category.
  *    @type  string   $order              Either ASC or DESC.
  *    @type  string   $orderby            The column we're sorting by.
- *    @type  string   $exclude            List of terms to exclude from the ShuffleJS filter list.
+ *    @type  string   $post__in           Comma separated list of Post IDs.
+ *    @type  string   $post_type          The post_type.
+ *    @type  bool     $include_all        Used with `post__in`, includes all other posts after initial set listed in `post__in`.
  *    @type  bool     $show_filters       Show the filters? (default: true)
+ *    @type  string   $tag                The tag. (?)
  *    @type  string   $taxonomies_display Comma separated list of taxonomy slugs we want to display filters for.
+ *    @type  string   $taxonomy           The taxonomy we're displaying as buttons.
+ *    @type  string   $terms              The terms. (?)
  * }
  *
  * @return     string  HTML for displaying our ShuffleJS filter and list of posts.
