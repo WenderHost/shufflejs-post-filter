@@ -11,6 +11,8 @@
  *
  * @package         Shufflejs_Post_Filter
  */
+$dev_mode = ( stristr( site_url(), '.local' ) )? true : false ;
+define( 'PF_DEV_MODE', $dev_mode );
 
 // Include files
 require_once 'lib/fns/enqueues.php';
