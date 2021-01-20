@@ -27,23 +27,23 @@ namespace ShufflejsPostFilter\shortcodes;
  * @return     string  HTML for displaying our ShuffleJS filter and list of posts.
  */
 function post_filter( $atts ){
-  $args = shortcode_atts( [
+  $args = shortcode_atts([
     'category'            => null,
-    'post__in'            => null,
-    'include_all'         => 0,
-    'tag'                 => null,
-    'post_type'           => 'post',
-    'taxonomy'            => null,
-    'terms'               => null,
-    'limit'               => -1,
-    'gridId'              => 'post-grid',
     'default_thumbnail'   => null,
+    'exclude'             => null,
     'filter_class_name'   => 'filter-link-group',
+    'gridId'              => 'post-grid',
+    'limit'               => -1,
     'order'               => null,
     'orderby'             => null,
-    'exclude'             => null,
+    'post__in'            => null,
+    'post_type'           => 'post',
+    'include_all'         => false,
     'show_filters'        => true,
+    'tag'                 => null,
     'taxonomies_display'  => null,
+    'taxonomy'            => null,
+    'terms'               => null,
   ], $atts );
 
   if( 'false' === $args['include_all'] ) $args['include_all'] = false;
