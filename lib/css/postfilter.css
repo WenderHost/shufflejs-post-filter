@@ -72,7 +72,7 @@
 .flip-card {
   background-color: transparent;
   height: 326px;
-  /*border: 1px solid #f1f1f1;*/
+  /*border: 1px solid $netmindblue; */
   perspective: 1000px;
   /* Remove this if you don't want the 3D effect */ }
 
@@ -172,7 +172,10 @@ ul.shuffle {
           bottom: 16px; }
       ul.shuffle li.list-item.product .course-meta {
         background: #fff;
-        padding: 10px 16px; }
+        padding: 10px 16px;
+        border-color: #009ee0;
+        border-style: solid;
+        border-width: 0 1px 1px 1px; }
         ul.shuffle li.list-item.product .course-meta .course-meta-row {
           display: flex;
           margin: 2px 0; }

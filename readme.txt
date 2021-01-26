@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.5.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
 ```
 
 == Changelog ==
+
+= 1.5.2 =
+* Adding blue border to Course card design.
 
 = 1.5.1 =
 * Updating NPM modules

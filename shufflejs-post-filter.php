@@ -7,7 +7,7 @@
  * Author URI:      https://mwender.com
  * Text Domain:     shufflejs-post-filter
  * Domain Path:     /languages
- * Version:         1.5.1
+ * Version:         1.5.2
  *
  * @package         Shufflejs_Post_Filter
  */
