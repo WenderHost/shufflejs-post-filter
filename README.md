@@ -3,7 +3,7 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.5.1  
-**Stable tag:** 1.5.2  
+**Stable tag:** 1.6.0  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -14,7 +14,8 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
  * Displays a ShuffleJS powered listing of posts.
  *
  * @param      array  $atts {
- *    @type  string   $category            The category. (?)
+ *    @type  string   $category            When querying `posts`, filter the posts by category. Accepts a comma separated list of category slugs.
+ *    @type  string   $category_not_in     When querying `posts`, exclude the posts by category. Accepts a comma separated list of category slugs.
  *    @type  int      $default_thumbnail   Default thumbnail ID.
  *    @type  string   $exclude             List of terms to exclude from the ShuffleJS filter list.
  *    @type  string   $filter_class_name   Filter class name.
@@ -43,6 +44,10 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
 ```
 
 ## Changelog ##
+
+### 1.6.0 ###
+* Handling `category` attribute of `[postfilter]` shortcode. Previously we weren't doing anything will a passed category. Now we are filtering by any category slugs passed via the `category="..."` attribute.
+* Adding `category_not_in` attribute to `[postfilter]`.
 
 ### 1.5.2 ###
 * Adding blue border to Course card design.

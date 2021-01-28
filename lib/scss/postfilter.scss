@@ -50,6 +50,15 @@ ul.shuffle{
     padding: 0.5em;
     width: 100%;
 
+    &.newsletter-signup .list-content{
+      color: #fff;
+      background-color: $netmindblue;
+    }
+
+    &.news h3{
+      margin-top: 1rem;
+    }
+
     &.product{
       flex-direction: column;
       font-family: 'futura-pt', sans-serif;

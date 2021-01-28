@@ -6,7 +6,8 @@ namespace ShufflejsPostFilter\shortcodes;
  * Displays a ShuffleJS powered listing of posts.
  *
  * @param      array  $atts {
- *    @type  string   $category            The category. (?)
+ *    @type  string   $category            When querying `posts`, filter the posts by category. Accepts a comma separated list of category slugs.
+ *    @type  string   $category_not_in     When querying `posts`, exclude the posts by category. Accepts a comma separated list of category slugs.
  *    @type  int      $default_thumbnail   Default thumbnail ID.
  *    @type  string   $exclude             List of terms to exclude from the ShuffleJS filter list.
  *    @type  string   $filter_class_name   Filter class name.
@@ -35,6 +36,7 @@ namespace ShufflejsPostFilter\shortcodes;
 function post_filter( $atts ){
   $args = shortcode_atts([
     'category'                  => null,
+    'category_not_in'           => null,
     'default_thumbnail'         => null,
     'exclude'                   => null,
     'filter_class_name'         => 'filter-link-group',
@@ -59,8 +61,10 @@ function post_filter( $atts ){
   // Setup boolean arguments
   if( 'false' === $args['include_all'] ) $args['include_all'] = false;
   $args['include_all'] = (bool) $args['include_all'];
+
   if( $args['show_all_filters'] === 'false' ) $args['show_all_filters'] = false;
   $args['show_all_filters'] = (bool) $args['show_all_filters'];
+
   if( $args['show_filters'] === 'false' ) $args['show_filters'] = false;
   $args['show_filters'] = (bool) $args['show_filters'];
 
@@ -85,6 +89,32 @@ function post_filter( $atts ){
     'post_type'       => $args['post_type'],
     'posts_per_page'  => -1,
   ];
+
+  // Setup categories
+  if( isset( $args['category'] ) && ! is_null( $args['category'] ) ){
+    $cat_array = [];
+    $categories = ( stristr( $args['category'], ',' ) )? explode( ',', $args['category'] ) : [ $args['category'] ] ;
+    foreach ($categories as $category_slug ) {
+      $category = get_category_by_slug( $category_slug );
+      if( $category )
+        $cat_array[] = $category->term_id;
+    }
+    if( 0 < count( $cat_array ) )
+      $query_args['category'] = implode( ',', $cat_array );
+  }
+
+  // Setup category__not_in
+  if( isset( $args['category_not_in'] ) && ! is_null( $args['category_not_in'] ) ){
+    $cat_array = [];
+    $categories = ( stristr( $args['category_not_in'], ',' ) )? explode( ',', $args['category_not_in'] ) : [ $args['category_not_in'] ] ;
+    foreach ($categories as $category_slug ) {
+      $category = get_category_by_slug( $category_slug );
+      if( $category )
+        $cat_array[] = $category->term_id;
+    }
+    if( 0 < count( $cat_array ) )
+      $query_args['category__not_in'] = implode( ',', $cat_array );
+  }
 
   // Specify set of posts by `post__in`
   if( ! is_null( $args['post__in'] ) ){
@@ -239,6 +269,26 @@ function post_filter( $atts ){
         $meta['virtual'] = ( in_array('Virtual', $delivery_modes ) )? true : false ;
       }
       $excerpt = strip_tags( get_the_content( null, false, $post->ID ) ); // get_the_excerpt( $post->ID )
+      //$excerpt = get_the_excerpt( $post->ID );
+
+      //*
+      if( (2 == $x) && ('post' == $args['post_type']) ){
+        $posts_array[$x] = [
+          'post_type' => 'signup',
+          'permalink'   => null,
+          'thumbnail'   => null,
+          'title'       => 'newsletter_form',
+          'esc_title'   => 'Form Goes Here',
+          'css_classes' => '["' . implode('","', $groups ) . '"]',
+          'groups'      => $groups,
+          'new'         => null,
+          'meta'        => null,
+          'excerpt'     => 'Newsletter sign up form goes here.',
+        ];
+        $x++;
+      }
+      /**/
+
       $posts_array[$x] = [
         'permalink'   => get_permalink( $post->ID ),
         'thumbnail'   => get_the_post_thumbnail_url( $post->ID, 'large' ),
@@ -282,6 +332,16 @@ function post_filter( $atts ){
           $posts_array[$x]['best_practice'] = strip_tags( $best_practices_html );
         }
 
+        $news_categories = wp_get_object_terms( $post->ID, ['news_category'] );
+        if( $news_categories ){
+          $meta_news_categories_array = [];
+          foreach( $news_categories as $term ){
+            $meta_news_categories_array[] = '<a href="' . get_term_link( $term->term_id ) . '">' . $term->name . '</a>';
+          }
+          $news_categories_html = ucwords( implode( ', ', $meta_news_categories_array ) );
+          $posts_array[$x]['news_category'] = strip_tags( $news_categories_html );
+        }
+
       }
       $x++;
     }
@@ -290,6 +350,7 @@ function post_filter( $atts ){
     $posts_json = '{ null }';
     $posts_array = [];
   }
+  //uber_log('🔔 $posts_array = ' . print_r( $posts_array, true ) );
 
   wp_enqueue_script( 'postfilter' );
   wp_localize_script( 'postfilter', 'wpvars', [
