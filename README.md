@@ -3,7 +3,7 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.5.1  
-**Stable tag:** 1.6.0  
+**Stable tag:** 1.7.0  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -20,7 +20,8 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
  *    @type  string   $exclude             List of terms to exclude from the ShuffleJS filter list.
  *    @type  string   $filter_class_name   Filter class name.
  *    @type  int      $gridId              Will be used as the HTML id attribute. Must be unique on the output page.
- *    @type  int      $limit               The category.
+ *    @type  int      $limit               Set the number of initial results as well as the size of each page of results. Defaults to `30`, set to
+ *                                         `-1` for "Endless Scroll".
  *    @type  string   $order               Either ASC or DESC.
  *    @type  string   $orderby             The column we're sorting by.
  *    @type  string   $post__in            Comma separated list of Post IDs.
@@ -44,6 +45,9 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
 ```
 
 ## Changelog ##
+
+### 1.7.0 ###
+* You can now "page" results and show a "Load More" button at the bottom. To do so, use the `limit` attribute to set the size of the page of results.
 
 ### 1.6.0 ###
 * Handling `category` attribute of `[postfilter]` shortcode. Previously we weren't doing anything will a passed category. Now we are filtering by any category slugs passed via the `category="..."` attribute.
