@@ -12,7 +12,8 @@ namespace ShufflejsPostFilter\shortcodes;
  *    @type  string   $exclude             List of terms to exclude from the ShuffleJS filter list.
  *    @type  string   $filter_class_name   Filter class name.
  *    @type  int      $gridId              Will be used as the HTML id attribute. Must be unique on the output page.
- *    @type  int      $limit               The category.
+ *    @type  int      $limit               Set the number of initial results as well as the size of each page of results. Defaults to `30`, set to
+ *                                         `-1` for "Endless Scroll".
  *    @type  string   $order               Either ASC or DESC.
  *    @type  string   $orderby             The column we're sorting by.
  *    @type  string   $post__in            Comma separated list of Post IDs.
@@ -41,7 +42,7 @@ function post_filter( $atts ){
     'exclude'                   => null,
     'filter_class_name'         => 'filter-link-group',
     'gridId'                    => 'post-grid',
-    'limit'                     => -1,
+    'limit'                     => 30,
     'order'                     => null,
     'orderby'                   => null,
     'post__in'                  => null,
@@ -78,8 +79,6 @@ function post_filter( $atts ){
       $primary_role_id = $primary_role->term_id;
     }
   }
-
-  $args['limit'] = -1; // Force all posts returned until we get LOAD MORE working
 
   // Set our default thumbnail
   if( ! is_null( $args['default_thumbnail'] ) && is_numeric( $args['default_thumbnail'] ) )
