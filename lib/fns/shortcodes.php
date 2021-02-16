@@ -59,8 +59,6 @@ function post_filter( $atts ){
     'terms'                     => null,
   ], $atts );
 
-  global $post;
-
   $html = []; // Initialize array for storing our HTML
 
   // Setup boolean arguments
@@ -154,6 +152,7 @@ function post_filter( $atts ){
 
   // Setup our related Courses meta query when we are viewing a WooCommerce Product:
   // SELECT courses WHERE `_yoast_wpseo_primary_sub_category` == current_course._yoast_wpseo_primary_sub_category
+  global $post;
   if( 'product' == get_post_type( $post ) ){
     $primary_sub_category = get_post_meta( $post->ID, '_yoast_wpseo_primary_sub_category', true );
     $query_args['meta_key'] = '_yoast_wpseo_primary_sub_category';
@@ -216,7 +215,6 @@ function post_filter( $atts ){
     foreach( $posts as $post ){
       $groups = [];
 
-      // <NEW>
       foreach ( $taxonomies as $taxonomy ) {
         if( PF_DEV_MODE ){
           $terms = wp_get_post_terms( $post->ID, $taxonomy ); // wp_get_post_terms() is uncached
@@ -243,22 +241,7 @@ function post_filter( $atts ){
           }
         }
       }
-      // </NEW>
 
-      // <OLD>
-      /*
-      $terms = wp_get_object_terms( $post->ID, $taxonomies );
-      if( ! empty( $terms ) && ! is_wp_error( $terms ) ){
-        foreach( $terms as $term ){
-          $groups[] = $term->slug;
-
-          if( ! in_array( $term->slug, $all_groups[$term->taxonomy] ) ){
-            $all_groups[$term->taxonomy][] = $term->slug;
-          }
-        }
-      }
-      /**/
-      // </OLD>
       if( 0 < count( $groups ) )
         $get_filters = true;
 
@@ -359,6 +342,8 @@ function post_filter( $atts ){
       }
       $x++;
     }
+    // Restore $post to global query $post object
+    wp_reset_postdata();
     $posts_json = json_encode( $posts_array );
   } else {
     $posts_json = '{ null }';

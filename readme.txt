@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.5.1
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
 ```
 
 == Changelog ==
+
+= 1.8.1 =
+* Restoring `$post` inside `[postfilter]` to global query `$post` object.
 
 = 1.8.0 =
 * Adding logic for "Related Courses" query when using `[postfilter post_type=product posts_per_page=3 show_filters=false]` on a Course (i.e. WooCommerce product single) page.
