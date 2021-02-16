@@ -18,6 +18,7 @@ namespace ShufflejsPostFilter\shortcodes;
  *    @type  string   $orderby             The column we're sorting by.
  *    @type  string   $post__in            Comma separated list of Post IDs.
  *    @type  string   $post_type           The post_type.
+ *    @type  int      $posts_per_page      The number of posts to return. Default -1.
  *    @type  string   $primary_role        The slug of the `role` you want to highlight when displaying "Roles/Professional Levels"
  *                                         as a filter. For example, if you want to use "Agile Coaching" as the filter under
  *                                         "Professional Levels", you set the $primary_role to `agile-coaching`, and your
@@ -47,6 +48,7 @@ function post_filter( $atts ){
     'orderby'                   => null,
     'post__in'                  => null,
     'post_type'                 => 'post',
+    'posts_per_page'            => -1,
     'primary_role'              => null,
     'include_all'               => false,
     'show_all_filters'          => false,
@@ -56,6 +58,8 @@ function post_filter( $atts ){
     'taxonomy'                  => null,
     'terms'                     => null,
   ], $atts );
+
+  global $post;
 
   $html = []; // Initialize array for storing our HTML
 
@@ -86,7 +90,7 @@ function post_filter( $atts ){
 
   $query_args = [
     'post_type'       => $args['post_type'],
-    'posts_per_page'  => -1,
+    'posts_per_page'  => $args['posts_per_page'],
   ];
 
   // Setup categories
@@ -146,6 +150,17 @@ function post_filter( $atts ){
         'terms'     => $args['terms'],
       ]
     ];
+  }
+
+  // Setup our related Courses meta query when we are viewing a WooCommerce Product:
+  // SELECT courses WHERE `_yoast_wpseo_primary_sub_category` == current_course._yoast_wpseo_primary_sub_category
+  if( 'product' == get_post_type( $post ) ){
+    $primary_sub_category = get_post_meta( $post->ID, '_yoast_wpseo_primary_sub_category', true );
+    $query_args['meta_key'] = '_yoast_wpseo_primary_sub_category';
+    $query_args['meta_value'] = $primary_sub_category;
+    $query_args['meta_type'] = 'NUMERIC';
+    $query_args['meta_compare'] = '=';
+    $query_args['post__not_in'] = [$post->ID];
   }
 
   /**

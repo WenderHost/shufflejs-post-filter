@@ -3,7 +3,7 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.5.1  
-**Stable tag:** 1.7.0  
+**Stable tag:** 1.8.0  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -26,6 +26,7 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
  *    @type  string   $orderby             The column we're sorting by.
  *    @type  string   $post__in            Comma separated list of Post IDs.
  *    @type  string   $post_type           The post_type.
+ *    @type  int      $posts_per_page      The number of posts to return. Default -1.
  *    @type  string   $primary_role        The slug of the `role` you want to highlight when displaying "Roles/Professional Levels"
  *                                         as a filter. For example, if you want to use "Agile Coaching" as the filter under
  *                                         "Professional Levels", you set the $primary_role to `agile-coaching`, and your
@@ -45,6 +46,10 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
 ```
 
 ## Changelog ##
+
+### 1.8.0 ###
+* Adding logic for "Related Courses" query when using `[postfilter post_type=product posts_per_page=3 show_filters=false]` on a Course (i.e. WooCommerce product single) page.
+* Adding `posts_per_page` attribute to `[postfilter]` to allow limiting of returned results.
 
 ### 1.7.0 ###
 * You can now "page" results and show a "Load More" button at the bottom. To do so, use the `limit` attribute to set the size of the page of results.
