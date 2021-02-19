@@ -18,6 +18,9 @@ define( 'PF_DEV_MODE', $dev_mode );
 require_once 'lib/fns/enqueues.php';
 require_once 'lib/fns/shortcodes.php';
 
+// Load Translation
+load_plugin_textdomain( 'shufflejs_post_filter', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
 /**
  * Enhanced error logging
  *
