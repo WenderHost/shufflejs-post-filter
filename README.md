@@ -45,7 +45,34 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
  */
 ```
 
+# The Newsletter Sign Up Form
+
+![The Newsletter Sign Up Form](images/form-setup_01.png)
+
+On Knowledge Center pages, I've setup `shufflejs-post-filter.js` to display the "Newsletter Signup Template". In order for that form to display properly, you must ensure the following setup inside WordPress and Elementor:
+
+1. The form must be saved as an Elementor Template with the title "Newsletter Signup Template". The plugin uses that title to query the proper template from Elementor's template library.
+2. You must add `newslettersignup` as the Form ID for the form. Find this under "Content &gt; Additional Options" when you're editing the form widget.
+
+![Find the Form ID setting under Content &gt; Additional Options](images/form-setup_02.png)
+
+# Instructions for Building Translations
+
+1. Run `grunt makepot` to generate `languages/shufflejs_post_filter.pot`.
+2. Copy `languages/shufflejs_post_filter.pot` with your desired language extension (e.g. `languages/shufflejs_post_filter-es_ES.po`).
+3. Update the translations in the file you copied in #2 (use [PoEdit](https://poedit.net/) if you prefer a GUI).
+4. Run `grunt po2mo` to build `.mo` files in `languages/`.
+
+Note: The first time I ran `grunt po2mo`, I got the error `Can not create sync-exec directory. To fix, I had to edit `node_modules\grunt-po2mo\tasks\po2mo.js` as follows:
+
+- Line 11 Original: `var exec = require('sync-exec');`
+- Line 11 Revised: `var exec = require('child_process').execSync;`
+
 ## Changelog ##
+
+### 1.8.2 ###
+* Adding dynamic insertion of the Newsletter Sign Up form.
+* Initial translation setup.
 
 ### 1.8.1 ###
 * Restoring `$post` inside `[postfilter]` to global query `$post` object.

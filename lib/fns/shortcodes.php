@@ -349,9 +349,14 @@ function post_filter( $atts ){
     $posts_json = '{ null }';
     $posts_array = [];
   }
-  //uber_log('🔔 $posts_array = ' . print_r( $posts_array, true ) );
 
   wp_enqueue_script( 'postfilter' );
+
+  // Get the Newsletter Sign Up form:
+  $newsletter_form = get_page_by_title( 'Newsletter Signup Template', OBJECT, 'elementor_library' );
+  $pluginElementor = \Elementor\Plugin::instance();
+  $newsletterForm = $pluginElementor->frontend->get_builder_content( $newsletter_form->ID );
+
   wp_localize_script( 'postfilter', 'wpvars', [
     'category' => $args['category'],
     'tag' => $args['tag'],
@@ -361,6 +366,8 @@ function post_filter( $atts ){
     'defaultThumbnail' => $args['default_thumbnail'],
     'filter_class_name' => $args['filter_class_name'],
     'limit' => $args['limit'],
+    'newsletterForm' => $newsletterForm,
+    'confirmationMessage' => __( 'Almost done! Please check your email to confirm your subscription.', 'shufflejs_post_filter' ),
   ]);
   wp_enqueue_style( 'postfilter' );
 
