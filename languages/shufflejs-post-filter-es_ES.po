@@ -27,11 +27,11 @@ msgstr ""
 
 #: lib/fns/shortcodes.php:370
 msgid "Almost done! Please check your email to confirm your subscription."
-msgstr ""
+msgstr "¡Casi termino! Porfavor revise su correo para confirmar su suscripción."
 
 #: lib/fns/shortcodes.php:443
 msgid "Professional Level"
-msgstr ""
+msgstr "Nivel profesional"
 
 #. Plugin Name of the plugin/theme
 msgid "ShuffleJS Post Filter"
