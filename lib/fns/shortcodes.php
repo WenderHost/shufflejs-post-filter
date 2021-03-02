@@ -367,7 +367,7 @@ function post_filter( $atts ){
     'filter_class_name' => $args['filter_class_name'],
     'limit' => $args['limit'],
     'newsletterForm' => $newsletterForm,
-    'confirmationMessage' => __( 'Almost done! Please check your email to confirm your subscription.', 'shufflejs_post_filter' ),
+    'confirmationMessage' => __( 'Almost done! Please check your email to confirm your subscription.', 'shufflejs-post-filter' ),
   ]);
   wp_enqueue_style( 'postfilter' );
 
@@ -440,7 +440,7 @@ function post_search_and_filters( $args = [] ){
 
     switch( strtolower( $taxonomy_obj->label ) ){
       case 'roles':
-        $heading = __( 'Professional Level', 'shufflejs_post_filter' );
+        $heading = __( 'Professional Level', 'shufflejs-post-filter' );
         break;
 
       default:

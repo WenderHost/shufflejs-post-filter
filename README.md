@@ -3,7 +3,7 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.6  
-**Stable tag:** 1.9.0  
+**Stable tag:** 1.9.1  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -58,8 +58,8 @@ On Knowledge Center pages, I've setup `shufflejs-post-filter.js` to display the 
 
 # Instructions for Building Translations
 
-1. Run `grunt makepot` to generate `languages/shufflejs_post_filter.pot`.
-2. Copy `languages/shufflejs_post_filter.pot` with your desired language extension (e.g. `languages/shufflejs_post_filter-es_ES.po`).
+1. Run `grunt makepot` to generate `languages/shufflejs-post-filter.pot`.
+2. Copy `languages/shufflejs-post-filter.pot` with your desired language extension (e.g. `languages/shufflejs-post-filter-es_ES.po`).
 3. Update the translations in the file you copied in #2 (use [PoEdit](https://poedit.net/) if you prefer a GUI).
 4. Run `grunt po2mo` to build `.mo` files in `languages/`.
 
@@ -69,6 +69,10 @@ Note: The first time I ran `grunt po2mo`, I got the error `Can not create sync-e
 - Line 11 Revised: `var exec = require('child_process').execSync;`
 
 ## Changelog ##
+
+### 1.9.1 ###
+* Updating text domain string to match the name of the lanugage file (changed "underscores" to "dashes").
+* Running `load_plugin_textdomain()` during `init` hook.
 
 ### 1.9.0 ###
 * Adding Spanish translation.
