@@ -444,7 +444,7 @@ function post_search_and_filters( $args = [] ){
         break;
 
       default:
-        $heading = ucwords( str_replace( '-', ' ', $taxonomy_obj->label ) );
+        $heading = str_replace( '-', ' ', $taxonomy_obj->label );
         break;
     }
 
