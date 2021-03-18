@@ -424,7 +424,7 @@ function post_search_and_filters( $args = [] ){
       'hierarchical' => false,
     ]);
 
-    $term_list = ['<li><a href="#" data-filter="*">All</a></li>'];
+    $term_list = ['<li><a href="#" data-filter="*">' . __( 'All', 'shufflejs-post-filter' ) . '</a></li>'];
     $exclude_array = explode( ',', str_replace(' ', '', $args['exclude'] ) );
     foreach( $terms as $term ){
       if( in_array( $term->slug, $exclude_array ) )
