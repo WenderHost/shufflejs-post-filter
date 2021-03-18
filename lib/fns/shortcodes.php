@@ -368,6 +368,9 @@ function post_filter( $atts ){
     'limit' => $args['limit'],
     'newsletterForm' => $newsletterForm,
     'confirmationMessage' => __( 'Almost done! Please check your email to confirm your subscription.', 'shufflejs-post-filter' ),
+    'labels' => [
+      'faceToFace' => __( 'Face-to-Face', 'shufflejs-post-filter' ),
+    ],
   ]);
   wp_enqueue_style( 'postfilter' );
 
