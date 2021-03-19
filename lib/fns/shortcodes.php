@@ -171,6 +171,8 @@ function post_filter( $atts ){
    */
   $get_filters = false;
 
+  if( NETMIND_DEBUG )
+    uber_log('[postfilter] $query_args = ' . print_r( $query_args, true ) );
   $posts = get_posts( $query_args );
 
   // Include all other posts?

@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.7
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Note: The first time I ran `grunt po2mo`, I got the error `Can not create sync-e
 - Line 11 Revised: `var exec = require('child_process').execSync;`
 
 == Changelog ==
+
+= 1.9.5 =
+* Adding `[postfilter] $query_args` logging via `NETMIND_DEBUG` constant.
 
 = 1.9.4 =
 * Adding Spanish translation for "Face-to-Face" (i.e. "Presencial").
