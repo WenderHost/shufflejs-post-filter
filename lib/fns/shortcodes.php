@@ -14,6 +14,8 @@ namespace ShufflejsPostFilter\shortcodes;
  *    @type  int      $gridId              Will be used as the HTML id attribute. Must be unique on the output page.
  *    @type  int      $limit               Set the number of initial results as well as the size of each page of results. Defaults to `30`, set to
  *                                         `-1` for "Endless Scroll".
+ *    @type  int      $mobile_break_point  Minimum width in pixels for mobile adjustments. For example, we are removing the Newsletter Sign Up form
+ *                                         in the Knowledge Center feed when viewing on mobile. (Default: 500)
  *    @type  string   $order               Either ASC or DESC.
  *    @type  string   $orderby             The column we're sorting by.
  *    @type  string   $post__in            Comma separated list of Post IDs.
@@ -44,6 +46,7 @@ function post_filter( $atts ){
     'filter_class_name'         => 'filter-link-group',
     'gridId'                    => 'post-grid',
     'limit'                     => 30,
+    'mobile_break_point'        => 500,
     'order'                     => null,
     'orderby'                   => null,
     'post__in'                  => null,
@@ -70,6 +73,9 @@ function post_filter( $atts ){
 
   if( $args['show_filters'] === 'false' ) $args['show_filters'] = false;
   $args['show_filters'] = (bool) $args['show_filters'];
+
+  if( ! is_int( $args['mobile_break_point'] ) )
+    $args['mobile_break_point'] = 500;
 
   // Grab the $term_id of the `primary_role`
   $primary_role_id = false;
@@ -368,6 +374,7 @@ function post_filter( $atts ){
     'defaultThumbnail' => $args['default_thumbnail'],
     'filter_class_name' => $args['filter_class_name'],
     'limit' => $args['limit'],
+    'mobileBreakPoint' => $args['mobile_break_point'],
     'newsletterForm' => $newsletterForm,
     'confirmationMessage' => __( 'Almost done! Please check your email to confirm your subscription.', 'shufflejs-post-filter' ),
     'labels' => [
