@@ -23,7 +23,7 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
  *    @type  int      $limit               Set the number of initial results as well as the size of each page of results. Defaults to `30`, set to
  *                                         `-1` for "Endless Scroll".
  *    @type  int      $mobile_break_point  Minimum width in pixels for mobile adjustments. For example, we are removing the Newsletter Sign Up form
- *                                         in the Knowledge Center feed when viewing on mobile. (Default: 500)
+ *                                         in the Knowledge Center feed when viewing on mobile. Default 500.
  *    @type  string   $order               Either ASC or DESC.
  *    @type  string   $orderby             The column we're sorting by.
  *    @type  string   $post__in            Comma separated list of Post IDs.
