@@ -3,7 +3,7 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.7  
-**Stable tag:** 1.9.7  
+**Stable tag:** 1.9.8  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -12,6 +12,16 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
 ```
 /**
  * Displays a ShuffleJS powered listing of posts.
+ *
+ * RELATED COURSES META QUERY
+ * When this function is running on a WooCommerce Product Single, we run
+ * a meta query using the Product's `_yoast_wpseo_primary_sub_category`.
+ * This allows us to display a listing of Related Courses which have the
+ * same Primary Sub Category.
+ *
+ * In order for this Related Courses query to work, the current Product
+ * must be assigned a Primary Sub Category, and there must be other
+ * Products (i.e. Courses) assigned the same Primary Sub Category.
  *
  * @param      array  $atts {
  *    @type  string   $category            When querying `posts`, filter the posts by category. Accepts a comma separated list of category slugs.
@@ -23,7 +33,7 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
  *    @type  int      $limit               Set the number of initial results as well as the size of each page of results. Defaults to `30`, set to
  *                                         `-1` for "Endless Scroll".
  *    @type  int      $mobile_break_point  Minimum width in pixels for mobile adjustments. For example, we are removing the Newsletter Sign Up form
- *                                         in the Knowledge Center feed when viewing on mobile. Default 500.
+ *                                         in the Knowledge Center feed when viewing on mobile. (Default 500)
  *    @type  string   $order               Either ASC or DESC.
  *    @type  string   $orderby             The column we're sorting by.
  *    @type  string   $post__in            Comma separated list of Post IDs.
@@ -71,6 +81,10 @@ Note: The first time I ran `grunt po2mo`, I got the error `Can not create sync-e
 - Line 11 Revised: `var exec = require('child_process').execSync;`
 
 ## Changelog ##
+
+### 1.9.8 ###
+* Additional documentation for "Related Posts" meta query in `post_filter()` function.
+* Updating NPM packages.
 
 ### 1.9.7 ###
 * Removing Newsletter Sign Up form in posts feed when browser width is less than the mobile break point.

@@ -5,6 +5,16 @@ namespace ShufflejsPostFilter\shortcodes;
 /**
  * Displays a ShuffleJS powered listing of posts.
  *
+ * RELATED COURSES META QUERY
+ * When this function is running on a WooCommerce Product Single, we run
+ * a meta query using the Product's `_yoast_wpseo_primary_sub_category`.
+ * This allows us to display a listing of Related Courses which have the
+ * same Primary Sub Category.
+ *
+ * In order for this Related Courses query to work, the current Product
+ * must be assigned a Primary Sub Category, and there must be other
+ * Products (i.e. Courses) assigned the same Primary Sub Category.
+ *
  * @param      array  $atts {
  *    @type  string   $category            When querying `posts`, filter the posts by category. Accepts a comma separated list of category slugs.
  *    @type  string   $category_not_in     When querying `posts`, exclude the posts by category. Accepts a comma separated list of category slugs.
