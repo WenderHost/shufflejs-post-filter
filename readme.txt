@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.7
-Stable tag: 1.9.8
+Stable tag: 1.9.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,12 @@ Note: The first time I ran `grunt po2mo`, I got the error `Can not create sync-e
 - Line 11 Revised: `var exec = require('child_process').execSync;`
 
 == Changelog ==
+
+= 1.9.9 =
+* Updating NPM packages.
+* Adding icon for "Transformation Sketch" Knowledge Center posts.
+* Adding CSS class for "Interview" Knowledge Center posts.
+* Recompiling `lib/js/dist/bundle.js` due to update to parent Shuffle JS library.
 
 = 1.9.8 =
 * Additional documentation for "Related Posts" meta query in `post_filter()` function.
