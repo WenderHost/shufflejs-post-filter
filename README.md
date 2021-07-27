@@ -3,7 +3,7 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.7  
-**Stable tag:** 1.9.9  
+**Stable tag:** 2.0.0  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -81,6 +81,9 @@ Note: The first time I ran `grunt po2mo`, I got the error `Can not create sync-e
 - Line 11 Revised: `var exec = require('child_process').execSync;`
 
 ## Changelog ##
+
+### 2.0.0 ###
+* Adding `filter_${taxonomy}` class names to filters to allow for addressing via CSS (e.g. `filter_resource-type`).
 
 ### 1.9.9 ###
 * Updating NPM packages.

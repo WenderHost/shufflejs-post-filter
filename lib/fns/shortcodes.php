@@ -395,7 +395,7 @@ function post_filter( $atts ){
 
   if( isset( $all_groups ) )
     $args['all_groups'] = $all_groups;
-  $filter_html = ( $get_filters && $args['show_filters'] )? post_search_and_filters( $args ) : '' ;
+  //$filter_html = ( $get_filters && $args['show_filters'] )? post_search_and_filters( $args ) : '' ;
   if( ( $get_filters && $args['show_filters'] ) )
     $html[] = post_search_and_filters( $args );
 
@@ -470,7 +470,7 @@ function post_search_and_filters( $args = [] ){
         break;
     }
 
-    $html[] = '<div class="filter"><h4>' . $heading . '</h4><ul class="filter-link-group ' . $taxonomy . '" data-taxonomy="' . $taxonomy . '">' . implode( '', $term_list ) . '</ul></div>';
+    $html[] = '<div class="filter filter-' . esc_attr( $taxonomy ) . '"><h4>' . $heading . '</h4><ul class="filter-link-group ' . $taxonomy . '" data-taxonomy="' . $taxonomy . '">' . implode( '', $term_list ) . '</ul></div>';
   }
   return implode( '', $html );
 }
