@@ -375,7 +375,7 @@ function post_filter( $atts ){
   $pluginElementor = \Elementor\Plugin::instance();
   $newsletterForm = $pluginElementor->frontend->get_builder_content( $newsletter_form->ID );
 
-  wp_localize_script( 'postfilter', 'wpvars', [
+  wp_localize_script( 'postfilter', 'postFilterVars', [
     'category' => $args['category'],
     'tag' => $args['tag'],
     'post_type' => $args['post_type'],
