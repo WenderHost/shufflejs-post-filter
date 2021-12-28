@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.7
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,7 +100,7 @@ In order to compile `lib/js/src/main.js` to `lib/js/dist/bundle.js`, you must ru
 
 == Changelog ==
 
-= 2.0.3 =
+= 2.0.4 =
 * Updating npm `caniuse` libraries.
 * Documenting `bundle.js` compile process.
 
