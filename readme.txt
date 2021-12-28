@@ -2,8 +2,8 @@
 Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
-Tested up to: 5.7
-Stable tag: 2.0.4
+Tested up to: 5.8
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,9 @@ The `bundle.js` file is compiled from the following source files:
 In order to compile `lib/js/src/main.js` to `lib/js/dist/bundle.js`, you must run `npm run build`. That runs the necessary compilation scripts as defined in `package.json`.
 
 == Changelog ==
+
+= 2.0.5 =
+* Correctly removing the CSS `background` property from `ul.shuffle .list-content.post .overlay` (i.e. Knowledge Center articles, see 2.0.3 below) by removing it in `lib/scss/postfilter.scss` and recompiling the CSS using `npm run build` to generate the compiled `lib/css/postfilter.css` file.
 
 = 2.0.4 =
 * Updating npm `caniuse` libraries.
