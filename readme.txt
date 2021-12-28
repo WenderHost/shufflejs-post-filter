@@ -104,6 +104,9 @@ In order to compile `lib/js/src/main.js` to `lib/js/dist/bundle.js`, you must ru
 * Updating npm `caniuse` libraries.
 * Documenting `bundle.js` compile process.
 
+= 2.0.3 =
+* Disable background knowledge-center article. Some funds do not appear in Spanish.
+
 = 2.0.2 =
 * Renaming localized variable from `wpvars` to `postFilterVars` to prevent naming collisions.
 
