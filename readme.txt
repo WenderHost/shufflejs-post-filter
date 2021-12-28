@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.7
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,7 +80,29 @@ Note: The first time I ran `grunt po2mo`, I got the error `Can not create sync-e
 - Line 11 Original: `var exec = require('sync-exec');`
 - Line 11 Revised: `var exec = require('child_process').execSync;`
 
+# Compiling this plugin's JavaScript (bundle.js)
+
+The JavaScript which powers this plugin is found in the following compiled file:
+
+- `lib/js/dist/bundle.js`
+
+The `bundle.js` file is compiled from the following source files:
+
+- `lib/js/src/main.js` - This is the "master" JS file which imports `lib/js/src/shufflejs-init.js` with the following dependencies:
+
+```
+  lib/js/src/shufflejs-init.js
+   ↳ lib/js/src/utilities.js
+   ↳ node_modules/shufflejs
+```
+
+In order to compile `lib/js/src/main.js` to `lib/js/dist/bundle.js`, you must run `npm run build`. That runs the necessary compilation scripts as defined in `package.json`.
+
 == Changelog ==
+
+= 2.0.3 =
+* Updating npm `caniuse` libraries.
+* Documenting `bundle.js` compile process.
 
 = 2.0.2 =
 * Renaming localized variable from `wpvars` to `postFilterVars` to prevent naming collisions.
