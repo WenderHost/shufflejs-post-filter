@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.8
-Stable tag: 2.0.5
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,10 @@ On Knowledge Center pages, I've setup `shufflejs-post-filter.js` to display the 
 
 ![Find the Form ID setting under Content &gt; Additional Options](images/form-setup_02.png)
 
+3. If you need to initialize Google reCAPTCHA on the Newsletter Sign Up form, you must add `pardot_recaptcha` as the reCAPTCHA field's ID value:
+
+![Use pardot_recaptcha as the reCAPTCHA fields ID.](images/form-setup_03.png)
+
 # Instructions for Building Translations
 
 1. Run `grunt makepot` to generate `languages/shufflejs-post-filter.pot`.
@@ -99,6 +103,9 @@ The `bundle.js` file is compiled from the following source files:
 In order to compile `lib/js/src/main.js` to `lib/js/dist/bundle.js`, you must run `npm run build`. That runs the necessary compilation scripts as defined in `package.json`.
 
 == Changelog ==
+
+= 2.1.0 =
+* Accomodating a Google reCAPTCHA field on the Newsletter Sign Up Form.
 
 = 2.0.5 =
 * Correctly removing the CSS `background` property from `ul.shuffle .list-content.post .overlay` (i.e. Knowledge Center articles, see 2.0.3 below) by removing it in `lib/scss/postfilter.scss` and recompiling the CSS using `npm run build` to generate the compiled `lib/css/postfilter.css` file.
