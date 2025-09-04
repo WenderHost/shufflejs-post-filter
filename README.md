@@ -3,7 +3,7 @@
 **Tags:** comments, spam  
 **Requires at least:** 4.5  
 **Tested up to:** 5.8  
-**Stable tag:** 2.1.0  
+**Stable tag:** 2.1.1  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -57,7 +57,7 @@ Displays a listing of posts sortable by ShuffleJS using the shortcode `[postfilt
  */
 ```
 
-# The Newsletter Sign Up Form
+# The Newsletter Sign Up Form #
 
 ![The Newsletter Sign Up Form](images/form-setup_01.png)
 
@@ -72,7 +72,7 @@ On Knowledge Center pages, I've setup `shufflejs-post-filter.js` to display the 
 
 ![Use pardot_recaptcha as the reCAPTCHA fields ID.](images/form-setup_03.png)
 
-# Instructions for Building Translations
+# Instructions for Building Translations #
 
 1. Run `grunt makepot` to generate `languages/shufflejs-post-filter.pot`.
 2. Copy `languages/shufflejs-post-filter.pot` with your desired language extension (e.g. `languages/shufflejs-post-filter-es_ES.po`).
@@ -84,7 +84,7 @@ Note: The first time I ran `grunt po2mo`, I got the error `Can not create sync-e
 - Line 11 Original: `var exec = require('sync-exec');`
 - Line 11 Revised: `var exec = require('child_process').execSync;`
 
-# Compiling this plugin's JavaScript (bundle.js)
+# Compiling this plugin's JavaScript (bundle.js) #
 
 The JavaScript which powers this plugin is found in the following compiled file:
 
@@ -103,6 +103,9 @@ The `bundle.js` file is compiled from the following source files:
 In order to compile `lib/js/src/main.js` to `lib/js/dist/bundle.js`, you must run `npm run build`. That runs the necessary compilation scripts as defined in `package.json`.
 
 ## Changelog ##
+
+### 2.1.1 ###
+* Removing `uber_log()`.
 
 ### 2.1.0 ###
 * Accomodating a Google reCAPTCHA field on the Newsletter Sign Up Form.

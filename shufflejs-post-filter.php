@@ -7,7 +7,7 @@
  * Author URI:      https://mwender.com
  * Text Domain:     shufflejs-post-filter
  * Domain Path:     /languages
- * Version:         2.1.0
+ * Version:         2.1.1
  *
  * @package         Shufflejs_Post_Filter
  */
@@ -23,22 +23,3 @@ function shufflejs_load_textdomain(){
   load_plugin_textdomain( 'shufflejs-post-filter', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 add_action( 'init', 'shufflejs_load_textdomain' );
-
-/**
- * Enhanced error logging
- *
- * @param      string  $message  The message
- */
-if( ! function_exists( 'uber_log') ){
-  function uber_log( $message = null ){
-    static $counter = 1;
-
-    $bt = debug_backtrace();
-    $caller = array_shift( $bt );
-
-    if( 1 == $counter )
-      error_log( "\n\n" . str_repeat('-', 25 ) . ' STARTING DEBUG [' . date('h:i:sa', current_time('timestamp') ) . '] ' . str_repeat('-', 25 ) . "\n\n" );
-    error_log( $counter . '. ' . basename( $caller['file'] ) . '::' . $caller['line'] . ' ' . $message );
-    $counter++;
-  }
-}

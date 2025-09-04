@@ -3,7 +3,7 @@ Contributors: TheWebist
 Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 5.8
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,9 @@ The `bundle.js` file is compiled from the following source files:
 In order to compile `lib/js/src/main.js` to `lib/js/dist/bundle.js`, you must run `npm run build`. That runs the necessary compilation scripts as defined in `package.json`.
 
 == Changelog ==
+
+= 2.1.1 =
+* Removing `uber_log()`.
 
 = 2.1.0 =
 * Accomodating a Google reCAPTCHA field on the Newsletter Sign Up Form.
